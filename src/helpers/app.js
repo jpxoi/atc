@@ -3,11 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const getMetarBtn = document.getElementById('get-metar');
     const getFlightBtn = document.getElementById('get-flight');
     const closeBtn = document.getElementById('close');
-    const surfaceSPJC = document.getElementById('SPJC-surface');
-    const surfaceSPRU = document.getElementById('SPRU-surface');
+    const surfaceVisualizer = document.getElementById('surface-visualizer');
     const selectorSPJC = document.getElementById('SPJC-selector');
     const selectorSPRU = document.getElementById('SPRU-selector');
-    const surfaceView = document.getElementById('surface-viewer');
     const radarBox = document.getElementById('radar-box');
     const closeMiniRadarBtn = document.getElementById('close-mini-radar');
     const openRadarBtn = document.getElementById('open-radar');
@@ -36,9 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const toggleSurface = (airport) => {
-        surfaceSPJC.style.display = 'none';
-        surfaceSPRU.style.display = 'none';
-        surfaceView.style.display = 'none';
+        surfaceVisualizer.innerHTML = '';
+        const url = `https://www.flightaware.com/live/airport/${airport}/surface`;
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.style.border = '0';
+        iframe.className = 'w-full rounded-lg aspect-video';
+        surfaceVisualizer.appendChild(iframe);
+        surfaceVisualizer.style.display = 'block';
 
         [selectorSPJC, selectorSPRU].forEach(selector => {
             selector.style.backgroundColor = 'white';
@@ -46,11 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const selectedSelector = document.getElementById(`${airport}-selector`);
-        const selectedSurface = document.getElementById(`${airport}-surface`);
-
         selectedSelector.style.backgroundColor = '#3B82F6';
         selectedSelector.style.color = 'white';
-        selectedSurface.style.display = 'block';
     };
 
     const openUrlInNewTab = (url) => {

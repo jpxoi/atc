@@ -27,6 +27,20 @@
 		<meta property="og:description" content="A simple dashboard for air traffic control enthusiasts.">
 		<meta property="og:site_name" content="ATC Dashboard">
 		<meta property="og:locale" content="en_US">
+
+		<style>
+			audio::-webkit-media-controls {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: white;
+				border-radius: 10px;
+			}
+			audio::-webkit-media-controls-panel {
+				background-color: white;
+				border-radius: 10px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="mx-auto lg:mx-2 p-4 mt-4">
@@ -108,22 +122,10 @@
 									<button id="SPRU-selector" class="bg-white text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">SPRU</button>
 								</div>
 							</div>
-							<div id="surface-viewer" class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg aspect-video justify-center items-center">
+							<div id="surface-visualizer" class="flex flex-col space-y-2 bg-gray-100 rounded-lg aspect-video justify-center items-center">
 								<p class="text-lg text-blue-900">Select an airport to view the surface traffic.</p>
 								<p class="text-sm text-gray-600">Powered by FlightAware</p>
 							</div>
-							<div id="SPJC-surface" class="w-full min-h-full hidden">
-								<iframe src="https://www.flightaware.com/live/airport/SPJC/surface" class="w-full rounded-lg aspect-video" style="border: 0;"></iframe>
-
-								<a href="https://www.flightaware.com/live/airport/SPJC/surface" target="_blank" rel="noreferrer" class="text-blue-500">View full screen</a>
-							</div>
-
-							<div id="SPRU-surface" class="w-full min-h-full rounded-lg hidden">
-								<iframe src="https://www.flightaware.com/live/airport/SPRU/surface" class="w-full rounded-lg aspect-video" style="border: 0;"></iframe>
-
-								<a href="https://www.flightaware.com/live/airport/SPRU/surface" target="_blank" rel="noreferrer" class="text-blue-500">View full screen</a>
-							</div>
-							
 						</div>
 					</div>
 					
