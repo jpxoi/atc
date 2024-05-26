@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Element selectors
     const getMetarBtn = document.getElementById('get-metar');
     const getFlightBtn = document.getElementById('get-flight');
     const closeBtn = document.getElementById('close');
@@ -11,48 +12,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeMiniRadarBtn = document.getElementById('close-mini-radar');
     const openRadarBtn = document.getElementById('open-radar');
     const livestreamMetarBtn = document.getElementById('livestream-metar');
-    const spjc_app_live_indicator = document.getElementById('spjc_app_live_indicator');
-    const spjc_twr_live_indicator = document.getElementById('spjc_twr_live_indicator');
-    const spjc_gnd_live_indicator = document.getElementById('spjc_gnd_live_indicator');
-    const spjc_app_audio = document.getElementById('spjc_app_audio');
-    const spjc_twr_audio = document.getElementById('spjc_twr_audio');
-    const spjc_gnd_audio = document.getElementById('spjc_gnd_audio');
 
-    spjc_app_audio.addEventListener('play', () => {
-        spjc_app_live_indicator.classList.remove('bg-gray-500');
-        spjc_app_live_indicator.classList.add('bg-red-500');
-        spjc_app_live_indicator.innerText = 'Live';
-    });
+    const audioElements = [
+        {
+            audio: document.getElementById('spjc_app_audio'),
+            indicator: document.getElementById('spjc_app_live_indicator')
+        },
+        {
+            audio: document.getElementById('spjc_twr_audio'),
+            indicator: document.getElementById('spjc_twr_live_indicator')
+        },
+        {
+            audio: document.getElementById('spjc_gnd_audio'),
+            indicator: document.getElementById('spjc_gnd_live_indicator')
+        }
+    ];
 
-    spjc_app_audio.addEventListener('pause', () => {
-        spjc_app_live_indicator.classList.remove('bg-red-500');
-        spjc_app_live_indicator.classList.add('bg-gray-500');
-        spjc_app_live_indicator.innerText = 'Offline';
-    });
-
-    spjc_twr_audio.addEventListener('play', () => {
-        spjc_twr_live_indicator.classList.remove('bg-gray-500');
-        spjc_twr_live_indicator.classList.add('bg-red-500');
-        spjc_twr_live_indicator.innerText = 'Live';
-    });
-
-    spjc_twr_audio.addEventListener('pause', () => {
-        spjc_twr_live_indicator.classList.remove('bg-red-500');
-        spjc_twr_live_indicator.classList.add('bg-gray-500');
-        spjc_twr_live_indicator.innerText = 'Offline';
-    });
-
-    spjc_gnd_audio.addEventListener('play', () => {
-        spjc_gnd_live_indicator.classList.remove('bg-gray-500');
-        spjc_gnd_live_indicator.classList.add('bg-red-500');
-        spjc_gnd_live_indicator.innerText = 'Live';
-    });
-
-    spjc_gnd_audio.addEventListener('pause', () => {
-        spjc_gnd_live_indicator.classList.remove('bg-red-500');
-        spjc_gnd_live_indicator.classList.add('bg-gray-500');
-        spjc_gnd_live_indicator.innerText = 'Offline';
-    });
+    // Helper functions
+    const updateIndicator = (indicator, removeClass, addClass, text) => {
+        indicator.classList.remove(removeClass);
+        indicator.classList.add(addClass);
+        indicator.innerText = text;
+    };
 
     const toggleSurface = (airport) => {
         surfaceSPJC.style.display = 'none';
@@ -84,9 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const url = `https://metar-taf.com/${airport}`;
+        openUrlInNewTab(`https://metar-taf.com/${airport}`);
         document.getElementById('airport').value = '';
-        openUrlInNewTab(url);
     };
 
     const showAircraftPosition = () => {
@@ -115,9 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const url = `https://www.flightradar24.com/${registration}`;
+        openUrlInNewTab(`https://www.flightradar24.com/${registration}`);
         document.getElementById('flight').value = '';
-        openUrlInNewTab(url);
     };
 
     const showLivestreamMetar = () => {
@@ -128,9 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const url = `https://metar-taf.com/livestream/${airport}?zoom=85`;
+        openUrlInNewTab(`https://metar-taf.com/livestream/${airport}?zoom=85`);
         document.getElementById('airport').value = '';
-        openUrlInNewTab(url);
     };
 
     const hideRadarBox = () => {
@@ -139,6 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
         closeMiniRadarBtn.style.display = 'none';
     };
 
+    // Event listeners for audio elements
+    audioElements.forEach(({audio, indicator}) => {
+        audio.addEventListener('play', () => updateIndicator(indicator, 'bg-gray-500', 'bg-yellow-500', 'Buffering'));
+        audio.addEventListener('error', () => updateIndicator(indicator, 'bg-yellow-500', 'bg-gray-500', 'Offline'));
+        audio.addEventListener('playing', () => updateIndicator(indicator, 'bg-yellow-500', 'bg-red-500', 'Live'));
+        audio.addEventListener('pause', () => updateIndicator(indicator, 'bg-red-500', 'bg-gray-500', 'Paused'));
+    });
+
+    // General event listeners
     selectorSPJC.addEventListener('click', () => toggleSurface('SPJC'));
     selectorSPRU.addEventListener('click', () => toggleSurface('SPRU'));
     getMetarBtn.addEventListener('click', getMetar);
