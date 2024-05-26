@@ -33,6 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         indicator.innerText = text;
     };
 
+    const showErrorNotification = (message) => {
+        const notification = document.createElement('div');
+        notification.className = 'bg-red-500 text-white p-3 rounded-lg text-center fixed top-10 left-10 right-10 z-50 max-w-2xl mx-auto';
+        notification.innerText = message;
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    };
+
     const toggleSurface = (airport) => {
         surfaceVisualizer.innerHTML = '';
         const url = `https://www.flightaware.com/live/airport/${airport}/surface`;
@@ -61,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const airport = document.getElementById('airport').value.trim();
 
         if (!airport) {
-            alert('Please enter an airport code.');
+            showErrorNotification('Please enter a valid ICAO airport code.');
             return;
         }
 
@@ -73,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const registration = document.getElementById('flight').value.trim();
 
         if (!registration) {
-            alert('Please enter a valid registration number.');
+            showErrorNotification('Please enter a valid aircraft registration number.');
             return;
         }
 
@@ -91,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const registration = document.getElementById('flight').value.trim();
 
         if (!registration) {
-            alert('Please enter a valid registration number.');
+            showErrorNotification('Please enter a valid aircraft registration number.');
             return;
         }
 
@@ -103,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const airport = document.getElementById('airport').value.trim();
 
         if (!airport) {
-            alert('Please enter an airport code.');
+            showErrorNotification('Please enter a valid ICAO airport code.');
             return;
         }
 
