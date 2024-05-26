@@ -11,6 +11,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeMiniRadarBtn = document.getElementById('close-mini-radar');
     const openRadarBtn = document.getElementById('open-radar');
     const livestreamMetarBtn = document.getElementById('livestream-metar');
+    const spjc_app_live_indicator = document.getElementById('spjc_app_live_indicator');
+    const spjc_twr_live_indicator = document.getElementById('spjc_twr_live_indicator');
+    const spjc_gnd_live_indicator = document.getElementById('spjc_gnd_live_indicator');
+    const spjc_app_audio = document.getElementById('spjc_app_audio');
+    const spjc_twr_audio = document.getElementById('spjc_twr_audio');
+    const spjc_gnd_audio = document.getElementById('spjc_gnd_audio');
+
+    spjc_app_audio.addEventListener('play', () => {
+        spjc_app_live_indicator.classList.remove('bg-gray-500');
+        spjc_app_live_indicator.classList.add('bg-red-500');
+        spjc_app_live_indicator.innerText = 'Live';
+    });
+
+    spjc_app_audio.addEventListener('pause', () => {
+        spjc_app_live_indicator.classList.remove('bg-red-500');
+        spjc_app_live_indicator.classList.add('bg-gray-500');
+        spjc_app_live_indicator.innerText = 'Offline';
+    });
+
+    spjc_twr_audio.addEventListener('play', () => {
+        spjc_twr_live_indicator.classList.remove('bg-gray-500');
+        spjc_twr_live_indicator.classList.add('bg-red-500');
+        spjc_twr_live_indicator.innerText = 'Live';
+    });
+
+    spjc_twr_audio.addEventListener('pause', () => {
+        spjc_twr_live_indicator.classList.remove('bg-red-500');
+        spjc_twr_live_indicator.classList.add('bg-gray-500');
+        spjc_twr_live_indicator.innerText = 'Offline';
+    });
+
+    spjc_gnd_audio.addEventListener('play', () => {
+        spjc_gnd_live_indicator.classList.remove('bg-gray-500');
+        spjc_gnd_live_indicator.classList.add('bg-red-500');
+        spjc_gnd_live_indicator.innerText = 'Live';
+    });
+
+    spjc_gnd_audio.addEventListener('pause', () => {
+        spjc_gnd_live_indicator.classList.remove('bg-red-500');
+        spjc_gnd_live_indicator.classList.add('bg-gray-500');
+        spjc_gnd_live_indicator.innerText = 'Offline';
+    });
 
     const toggleSurface = (airport) => {
         surfaceSPJC.style.display = 'none';

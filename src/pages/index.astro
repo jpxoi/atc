@@ -63,24 +63,33 @@
 								<h4 class="text-xl font-bold">SPJC Jorge Chávez International Airport</h4>
 								<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 									<div id="spjc_app" class="flex flex-col space-y-4">
-										<h5 class="text-lg font-bold">Approach (119.700)</h5>
-										<audio controls class="w-full">
+										<div class="flex flex-row space-x-4 items-center">
+											<h5 class="text-lg font-bold">Approach (119.700)</h5>
+											<span id="spjc_app_live_indicator" class="text-sm bg-gray-500 text-white px-2 py-1 rounded">Offline</span>
+										</div>
+										<audio controls class="w-full" id="spjc_app_audio">
 											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
 											Your browser does not support the audio element.
 										</audio>
 									</div>
 									
 									<div id="spjc_twr" class="flex flex-col space-y-4">
-										<h5 class="text-lg font-bold">Tower (118.100)</h5>
-										<audio controls class="w-full">
+										<div class="flex flex-row space-x-4 items-center">
+											<h5 class="text-lg font-bold">Tower (118.100)</h5>
+											<span id="spjc_twr_live_indicator" class="text-sm bg-gray-500 text-white px-2 py-1 rounded">Offline</span>
+										</div>
+										<audio controls class="w-full" id="spjc_twr_audio">
 											<source src="https://d.liveatc.net/spjc1_twr" type="audio/mpeg">
 											Your browser does not support the audio element.
 										</audio>
 									</div>
 
 									<div id="spjc_gnd" class="flex flex-col space-y-4">
-										<h5 class="text-lg font-bold">Ground (121.900)</h5>
-										<audio controls class="w-full">
+										<div class="flex flex-row space-x-4 items-center">
+											<h5 class="text-lg font-bold">Ground (121.900)</h5>
+											<span id="spjc_gnd_live_indicator" class="text-sm bg-gray-500 text-white px-2 py-1 rounded">Offline</span>
+										</div>
+										<audio controls class="w-full" id="spjc_gnd_audio">
 											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
 											Your browser does not support the audio element.
 										</audio>
