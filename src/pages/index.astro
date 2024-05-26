@@ -6,11 +6,126 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Georgina ATC</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div class="mx-auto lg:mx-2 p-4 mt-4">
+			<main>
+				<div class="bg-blue-200 p-4 mb-4 rounded flex flex-row justify-between items-center">
+					<p class="text-sm text-blue-950">This is a work in progress. If you have any suggestions or feedback, please <a href="https://wa.me/447787024710" class="underline">let me know</a>.</p>
+					<span id="close" class="text-sm cursor-pointer text-blue-950">𐄂</span>
+				</div>
+
+				<div class="grid grid-cols-1 lg:grid-cols-[5fr,2fr] gap-8">
+					<div class="flex flex-col space-y-8">
+
+						<div id="flightstatus" class="flex flex-col space-y-4">
+							<h2 class="text-2xl font-bold">✈️ Aircraft Position</h2>
+							<div class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg">
+								<p>Enter the registration number of an aircraft to view its current position.</p>
+								<input type="text" id="flight" class="p-4 border border-gray-200 rounded" placeholder="Enter the registration number" />
+								<div class="flex flex-row space-x-4 justify-start">
+									<button id="get-flight" class="bg-blue-500 text-white p-4 rounded hover:bg-blue-700 hover:text-white">Get Aircraft Position</button>
+									<button id="open-radar" class="secondary bg-white text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">Open Radar</button>
+									<button id="close-mini-radar" class="secondary bg-white text-red-500 p-4 rounded hover:bg-red-700 hover:text-white hidden">Close Mini Radar</button>
+								</div>
+							</div>
+
+							<div id="radar-box" class="bg-gray-100 rounded-lg aspect-video hidden">
+							</div>
+						</div>
+						
+
+						<div id="atc" class="mt-8 flex flex-col space-y-4">
+							<h3 class="text-2xl font-bold">🗼 Live ATC</h3>
+
+							<div id="sjpc_atc" class="bg-gray-100 p-4 rounded-lg space-y-4">
+								<h4 class="text-xl font-bold">SPJC Jorge Chávez International Airport</h4>
+								<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+									<div id="spjc_app" class="flex flex-col space-y-4">
+										<h5 class="text-lg font-bold">Approach (119.700)</h5>
+										<audio controls class="w-full">
+											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
+											Your browser does not support the audio element.
+										</audio>
+									</div>
+									
+									<div id="spjc_twr" class="flex flex-col space-y-4">
+										<h5 class="text-lg font-bold">Tower (118.100)</h5>
+										<audio controls class="w-full">
+											<source src="https://d.liveatc.net/spjc1_twr" type="audio/mpeg">
+											Your browser does not support the audio element.
+										</audio>
+									</div>
+
+									<div id="spjc_gnd" class="flex flex-col space-y-4">
+										<h5 class="text-lg font-bold">Ground (121.900)</h5>
+										<audio controls class="w-full">
+											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
+											Your browser does not support the audio element.
+										</audio>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+
+						<div id="surface" class="mt-8 flex flex-col space-y-4">
+							<h3 class="text-2xl font-bold">🛬 Surface Viewer</h3>
+							<div class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg">
+								<p>Select an airport to view the traffic on the surface.</p>
+								<div class="flex flex-row flex-wrap space-x-4">
+									<button id="SPJC-selector" class="bg-white text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">SPJC</button>
+									<button id="SPRU-selector" class="bg-white text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">SPRU</button>
+								</div>
+							</div>
+							<div id="surface-viewer" class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg aspect-video justify-center items-center">
+								<p class="text-lg text-blue-900">Select an airport to view the surface traffic.</p>
+								<p class="text-sm text-gray-600">Powered by FlightAware</p>
+							</div>
+							<div id="SPJC-surface" class="w-full min-h-full hidden">
+								<iframe src="https://www.flightaware.com/live/airport/SPJC/surface" class="w-full rounded-lg aspect-video" style="border: 0;"></iframe>
+
+								<a href="https://www.flightaware.com/live/airport/SPJC/surface" target="_blank" rel="noreferrer" class="text-blue-500">View full screen</a>
+							</div>
+
+							<div id="SPRU-surface" class="w-full min-h-full rounded-lg hidden">
+								<iframe src="https://www.flightaware.com/live/airport/SPRU/surface" class="w-full rounded-lg aspect-video" style="border: 0;"></iframe>
+
+								<a href="https://www.flightaware.com/live/airport/SPRU/surface" target="_blank" rel="noreferrer" class="text-blue-500">View full screen</a>
+							</div>
+							
+						</div>
+					</div>
+					
+
+					<div id="metar" class="flex flex-col space-y-4">
+						<h3 class="text-2xl font-bold">🌥️ METAR</h3>
+						<div class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg justify-center items-center">
+							<a href="https://metar-taf.com/SPRU" id="metartaf-myjZ3sai" style="font-size:18px; font-weight:500; color:#000; width:420px; height:278px; display:block">METAR Capitan FAP Carlos Martinez De Pinillos International Airport</a>
+							<a href="https://metar-taf.com/livestream/SPRU?zoom=85" class="text-blue-500">Livestream METAR for SPRU</a>
+						</div>
+
+						<div class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg justify-center items-center">
+							<a href="https://metar-taf.com/SPJC" id="metartaf-lmtyUCkt" style="font-size:18px; font-weight:500; color:#000; width:420px; height:278px; display:block">METAR Jorge Chávez International Airport</a>
+							<a href="https://metar-taf.com/livestream/SPJC?zoom=85" class="text-blue-500">Livestream METAR for SPJC</a>
+						</div>
+
+						<h4 class="text-xl font-bold mt-8">Other Airports</h4>
+						<div class="flex flex-col space-y-4 bg-gray-100 p-4 rounded-lg">
+							<input class="p-4 border border-gray-200 rounded" type="text" id="airport" placeholder="Enter an ICAO code" />
+							<div class="flex flex-row space-x-4 justify-start">
+								<button id="get-metar" class="bg-blue-500 text-white p-4 rounded hover:bg-blue-700 hover:text-white">Get METAR</button>
+								<button id="livestream-metar" class="secondary bg-white text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">Livestream METAR</button>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script src="../helpers/app.js"></script>
+		<script async defer crossorigin="anonymous" src="https://metar-taf.com/embed-js/SPJC?layout=landscape&qnh=hPa&rh=rh&target=lmtyUCkt"></script>
+		<script async defer crossorigin="anonymous" src="https://metar-taf.com/embed-js/SPRU?layout=landscape&qnh=hPa&rh=rh&target=myjZ3sai"></script>
 	</body>
 </html>
