@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showErrorNotification = (message) => {
         const notification = document.createElement('div');
-        notification.className = 'bg-red-500 text-white p-3 rounded-lg text-center fixed top-10 left-10 right-10 z-50 max-w-2xl mx-auto';
+        notification.className = 'bg-red-500 dark:bg-red-700 text-white p-3 rounded-lg text-center fixed top-10 left-10 right-10 z-50 max-w-2xl mx-auto';
         notification.innerText = message;
         document.body.appendChild(notification);
         setTimeout(() => {

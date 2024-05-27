@@ -10,6 +10,8 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>ATC Dashboard | Air Traffic Control</title>
 
+		<link rel="stylesheet" href="/src/styles/player.css"/>
+
 		<meta name="description" content="A simple dashboard for air traffic control enthusiasts.">
 		<meta name="keywords" content="ATC, Air Traffic Control, Radar, FlightAware, METAR, Aviation, Flight, Aircraft, Live ATC">
 		<meta name="author" content="Jean Paul Fernandez">
@@ -31,8 +33,6 @@
 		<meta property="og:locale" content="en_US">
 
 		<script fetchpriority="high" src="src/helpers/metar.js"></script>
-
-		<link rel="stylesheet" href="/src/styles/player.css"/>
 	</head>
 	<body class="dark:bg-gray-900 dark:text-white">
 		<div class="mx-auto lg:mx-2 p-4 mt-4 dark:bg-gray-900">
@@ -44,11 +44,11 @@
 							<h2 class="text-2xl font-bold">✈️ Aircraft Position</h2>
 							<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
 								<p>Enter the registration number of an aircraft to view its current position.</p>
-								<input type="text" id="flight" class="p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-600 rounded" placeholder="Enter the registration number" />
+								<input type="text" id="flight" class="p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-600 rounded-lg" placeholder="Enter the registration number" />
 								<div class="flex flex-row space-x-4 justify-start">
-									<button id="get-flight" class="bg-blue-500 text-white p-4 rounded hover:bg-blue-700 hover:text-white">Get Aircraft Position</button>
-									<button id="open-radar" class="secondary bg-white dark:bg-gray-700 text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">Open Radar</button>
-									<button id="close-mini-radar" class="secondary bg-white dark:bg-gray-700 text-red-500 p-4 rounded hover:bg-red-700 hover:text-white hidden">Close Mini Radar</button>
+									<button id="get-flight" class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 hover:text-white">Get Aircraft Position</button>
+									<button id="open-radar" class="secondary bg-white dark:bg-gray-700 text-blue-500 p-4 rounded-lg hover:bg-blue-700 hover:text-white">Open Radar</button>
+									<button id="close-mini-radar" class="secondary bg-white dark:bg-gray-700 text-red-500 p-4 rounded-lg hover:bg-red-700 hover:text-white hidden">Close Mini Radar</button>
 								</div>
 							</div>
 
@@ -66,7 +66,7 @@
 									<div id="spjc_app" class="flex flex-col space-y-4">
 										<div class="flex flex-row space-x-4 items-center">
 											<h5 class="text-lg font-bold">Approach <span class="text-sm text-gray-700 dark:text-gray-300">(119.100)</span></h5>
-											<span id="spjc_app_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded">Offline</span>
+											<span id="spjc_app_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg">Offline</span>
 										</div>
 										<audio controls class="w-full" id="spjc_app_audio" preload="auto">
 											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
@@ -77,7 +77,7 @@
 									<div id="spjc_twr" class="flex flex-col space-y-4">
 										<div class="flex flex-row space-x-4 items-center">
 											<h5 class="text-lg font-bold">Tower <span class="text-sm text-gray-700 dark:text-gray-300">(118.100)</span></h5>
-											<span id="spjc_twr_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded">Offline</span>
+											<span id="spjc_twr_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg">Offline</span>
 										</div>
 										<audio controls class="w-full" id="spjc_twr_audio" preload="auto">
 											<source src="https://d.liveatc.net/spjc1_twr" type="audio/mpeg">
@@ -88,7 +88,7 @@
 									<div id="spjc_gnd" class="flex flex-col space-y-4">
 										<div class="flex flex-row space-x-4 items-center">
 											<h5 class="text-lg font-bold">Ground <span class="text-sm text-gray-700 dark:text-gray-300">(121.900)</span></h5>
-											<span id="spjc_gnd_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded">Offline</span>
+											<span id="spjc_gnd_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg">Offline</span>
 										</div>
 										<audio controls class="w-full" id="spjc_gnd_audio" preload="auto">
 											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
@@ -105,8 +105,8 @@
 							<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
 								<p>Select an airport to view the traffic on the surface.</p>
 								<div class="flex flex-row flex-wrap space-x-4">
-									<button id="SPJC-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded hover:bg-blue-700 hover:text-white">LIM / SPJC</button>
-									<button id="SPRU-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded hover:bg-blue-700 hover:text-white">TRU / SPJC</button>
+									<button id="SPJC-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white">LIM / SPJC</button>
+									<button id="SPRU-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white">TRU / SPJC</button>
 								</div>
 							</div>
 							<div id="surface-visualizer" class="flex flex-col space-y-2 bg-gray-100 dark:bg-gray-800 rounded-lg aspect-[9/16] md:aspect-video justify-center items-center">
@@ -132,10 +132,10 @@
 
 						<h4 class="text-xl font-bold mt-8">Other Airports</h4>
 						<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-							<input class="p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-600 rounded" type="text" id="airport" placeholder="Enter an ICAO code" />
+							<input class="p-4 border border-gray-200 dark:border-gray-700 dark:bg-gray-600 rounded-lg" type="text" id="airport" placeholder="Enter an ICAO code" />
 							<div class="flex flex-row space-x-4 justify-start">
-								<button id="get-metar" class="bg-blue-500 text-white p-4 rounded hover:bg-blue-700 hover:text-white">Get METAR</button>
-								<button id="livestream-metar" class="secondary bg-white dark:bg-gray-700 text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">Livestream METAR</button>
+								<button id="get-metar" class="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-700 hover:text-white">Get METAR</button>
+								<button id="livestream-metar" class="secondary bg-white dark:bg-gray-700 text-blue-500 p-4 rounded-lg hover:bg-blue-700 hover:text-white">Livestream METAR</button>
 						</div>
 					</div>
 				</div>
