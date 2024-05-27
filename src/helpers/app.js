@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Element selectors
     const getMetarBtn = document.getElementById('get-metar');
     const getFlightBtn = document.getElementById('get-flight');
-    const closeBtn = document.getElementById('close');
     const surfaceVisualizer = document.getElementById('surface-visualizer');
     const selectorSPJC = document.getElementById('SPJC-selector');
     const selectorSPRU = document.getElementById('SPRU-selector');
@@ -26,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Helper functions
     const updateIndicator = (indicator, removeClass, addClass, text) => {
         // If user prefers dark mode, add dark: prefix to the classes
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -174,9 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
     selectorSPRU.addEventListener('click', () => toggleSurface('SPRU'));
     getMetarBtn.addEventListener('click', getMetar);
     getFlightBtn.addEventListener('click', showAircraftPosition);
-    closeBtn.addEventListener('click', () => {
-        document.querySelector('.bg-blue-200').style.display = 'none';
-    });
     openRadarBtn.addEventListener('click', openRadar);
     livestreamMetarBtn.addEventListener('click', showLivestreamMetar);
     closeMiniRadarBtn.addEventListener('click', hideRadarBox);

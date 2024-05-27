@@ -30,70 +30,13 @@
 		<meta property="og:site_name" content="ATC Dashboard">
 		<meta property="og:locale" content="en_US">
 
-		<script>
-			const getUserTheme = () => {
-				return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-			};
-	
-			const loadScriptsBasedOnTheme = () => {
-				const theme = getUserTheme();
-				const script1 = document.createElement('script');
-				const script2 = document.createElement('script');
-	
-				script1.async = true;
-				script1.defer = true;
-				script1.crossOrigin = 'anonymous';
-				script2.async = true;
-				script2.defer = true;
-				script2.crossOrigin = 'anonymous';
-	
-				if (theme === 'dark') {
-					script1.src = 'https://metar-taf.com/embed-js/SPJC?bg_color=1f2937&layout=landscape&qnh=hPa&rh=rh&target=biLXE9nn';
-					script2.src = 'https://metar-taf.com/embed-js/SPRU?bg_color=1f2937&layout=landscape&qnh=hPa&rh=rh&target=myjZ3sai';
-				} else {
-					script1.src = 'https://metar-taf.com/embed-js/SPJC?layout=landscape&qnh=hPa&rh=rh&target=biLXE9nn';
-					script2.src = 'https://metar-taf.com/embed-js/SPRU?layout=landscape&qnh=hPa&rh=rh&target=myjZ3sai';
-				}
-	
-				document.head.appendChild(script1);
-				document.head.appendChild(script2);
-			};
-	
-			document.addEventListener('DOMContentLoaded', loadScriptsBasedOnTheme);
-		</script>
+		<script fetchpriority="high" src="src/helpers/metar.js"></script>
 
-		<style>
-			audio::-webkit-media-controls {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				background-color: white;
-				border-radius: 10px;
-			}
-			audio::-webkit-media-controls-panel {
-				background-color: white;
-				border-radius: 10px;
-			}
-
-			/* Add dark mode styles for audio player */
-			@media (prefers-color-scheme: dark) {
-				audio::-webkit-media-controls {
-					background-color: #4b5563;
-				}
-				audio::-webkit-media-controls-panel {
-					background-color: #4b5563;
-				}
-			}
-		</style>
+		<link rel="stylesheet" href="/src/styles/player.css"/>
 	</head>
 	<body class="dark:bg-gray-900 dark:text-white">
 		<div class="mx-auto lg:mx-2 p-4 mt-4 dark:bg-gray-900">
 			<main>
-				<div class="bg-blue-200 dark:bg-blue-800 p-4 mb-4 rounded flex flex-row justify-between items-center">
-					<p class="text-sm text-blue-950 dark:text-blue-200">This is a work in progress. If you have any suggestions or feedback, please <a href="https://t.me/jpxoi" target="_blank" rel="noreferrer" class="underline">let me know</a>.</p>
-					<span id="close" class="text-sm cursor-pointer text-blue-950 dark:text-blue-200">𐄂</span>
-				</div>
-
 				<div class="grid grid-cols-1 md:grid-cols-[5fr,2fr] gap-8">
 					<div class="flex flex-col space-y-8">
 
@@ -119,7 +62,7 @@
 
 							<div id="sjpc_atc" class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-4">
 								<h4 class="text-xl font-bold">LIM / SPJC Jorge Chávez International Airport</h4>
-								<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-4">
+								<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
 									<div id="spjc_app" class="flex flex-col space-y-4">
 										<div class="flex flex-row space-x-4 items-center">
 											<h5 class="text-lg font-bold">Approach <span class="text-sm text-gray-700 dark:text-gray-300">(119.100)</span></h5>
@@ -198,6 +141,11 @@
 				</div>
 			</main>
 		</div>
+
+		<script>
+			
+		</script>
+
 		<script src="../helpers/app.js"></script>
 	</body>
 </html>

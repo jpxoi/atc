@@ -1,0 +1,21 @@
+audio::-webkit-media-controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+	border-radius: 10px;
+}
+audio::-webkit-media-controls-panel {
+	background-color: white;
+	border-radius: 10px;
+}
+
+/* Add dark mode styles for audio player */
+@media (prefers-color-scheme: dark) {
+	audio::-webkit-media-controls {
+		background-color: #4b5563;
+	}
+	audio::-webkit-media-controls-panel {
+		background-color: #4b5563;
+	}
+}
