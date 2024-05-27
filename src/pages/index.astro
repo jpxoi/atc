@@ -14,7 +14,9 @@
 		<meta name="keywords" content="ATC, Air Traffic Control, Radar, FlightAware, METAR, Aviation, Flight, Aircraft, Live ATC">
 		<meta name="author" content="Jean Paul Fernandez">
 		<meta name="robots" content="index, follow">
-		<meta name="theme-color" content="#ffffff">
+
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
 
 		<meta name="twitter:site" content="@jpxoi">
 		<meta name="twitter:creator" content="@jpxoi">
@@ -85,7 +87,7 @@
 		</style>
 	</head>
 	<body class="dark:bg-gray-900 dark:text-white">
-		<div class="mx-auto lg:mx-2 p-4 mt-4">
+		<div class="mx-auto lg:mx-2 p-4 mt-4 dark:bg-gray-900">
 			<main>
 				<div class="bg-blue-200 dark:bg-blue-800 p-4 mb-4 rounded flex flex-row justify-between items-center">
 					<p class="text-sm text-blue-950 dark:text-blue-200">This is a work in progress. If you have any suggestions or feedback, please <a href="https://t.me/jpxoi" target="_blank" rel="noreferrer" class="underline">let me know</a>.</p>
@@ -116,7 +118,7 @@
 							<h3 class="text-2xl font-bold">🗼 Live ATC</h3>
 
 							<div id="sjpc_atc" class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-4">
-								<h4 class="text-xl font-bold">SPJC Jorge Chávez International Airport</h4>
+								<h4 class="text-xl font-bold">LIM / SPJC Jorge Chávez International Airport</h4>
 								<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-4">
 									<div id="spjc_app" class="flex flex-col space-y-4">
 										<div class="flex flex-row space-x-4 items-center">
@@ -160,8 +162,8 @@
 							<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
 								<p>Select an airport to view the traffic on the surface.</p>
 								<div class="flex flex-row flex-wrap space-x-4">
-									<button id="SPJC-selector" class="bg-white dark:bg-gray-700 text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">SPJC</button>
-									<button id="SPRU-selector" class="bg-white dark:bg-gray-700 text-blue-500 p-4 rounded hover:bg-blue-700 hover:text-white">SPRU</button>
+									<button id="SPJC-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded hover:bg-blue-700 hover:text-white">LIM / SPJC</button>
+									<button id="SPRU-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded hover:bg-blue-700 hover:text-white">TRU / SPJC</button>
 								</div>
 							</div>
 							<div id="surface-visualizer" class="flex flex-col space-y-2 bg-gray-100 dark:bg-gray-800 rounded-lg aspect-[9/16] md:aspect-video justify-center items-center">
@@ -177,12 +179,12 @@
 						<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center">
 							<a class="w-[300px] lg:w-[420px] h-[270px]" href="https://metar-taf.com/SPRU" id="metartaf-myjZ3sai" style="font-size:18px; font-weight:500; color:#000; display:block">METAR Capitan FAP Carlos Martinez De Pinillos International Airport</a>
 
-							<a href="https://metar-taf.com/livestream/SPRU?zoom=85" class="text-blue-500 hover:text-blue-700">Livestream METAR for SPRU</a>
+							<a href="https://metar-taf.com/livestream/SPRU?zoom=85" class="text-blue-500 hover:text-blue-700">Livestream METAR for TRU / SPRU</a>
 						</div>
 
 						<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center">
 							<a class="w-[300px] lg:w-[420px] h-[270px]" href="https://metar-taf.com/SPJC" id="metartaf-biLXE9nn" style="font-size:18px; font-weight:500; color:#000">METAR Jorge Chávez International Airport</a>
-							<a href="https://metar-taf.com/livestream/SPJC?zoom=85" class="text-blue-500 hover:text-blue-700">Livestream METAR for SPJC</a>
+							<a href="https://metar-taf.com/livestream/SPJC?zoom=85" class="text-blue-500 hover:text-blue-700">Livestream METAR for LIM / SPJC</a>
 						</div>
 
 						<h4 class="text-xl font-bold mt-8">Other Airports</h4>
