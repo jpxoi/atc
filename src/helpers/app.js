@@ -28,6 +28,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper functions
     const updateIndicator = (indicator, removeClass, addClass, text) => {
+        // If user prefers dark mode, add dark: prefix to the classes
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            indicator.classList.remove('dark:bg-gray-700');
+
+            switch (addClass) {
+                case 'bg-red-500':
+                    indicator.classList.add('bg-red-700');
+                    break;
+                case 'bg-yellow-500':
+                    indicator.classList.add('bg-yellow-700');
+                    break;
+                case 'bg-gray-500':
+                    indicator.classList.add('bg-gray-700');
+                    break;
+            }
+
+            switch(removeClass) {
+                case 'bg-red-500':
+                    indicator.classList.remove('bg-red-700');
+                    break;
+                case 'bg-yellow-500':
+                    indicator.classList.remove('bg-yellow-700');
+                    break;
+                case 'bg-gray-500':
+                    indicator.classList.remove('bg-gray-700');
+                    break;
+            }
+        }
+
         indicator.classList.remove(removeClass);
         indicator.classList.add(addClass);
         indicator.innerText = text;
@@ -54,7 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
         surfaceVisualizer.style.display = 'block';
 
         [selectorSPJC, selectorSPRU].forEach(selector => {
-            selector.style.backgroundColor = 'white';
+
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                selector.style.backgroundColor = '#374151';
+            } else {
+                selector.style.backgroundColor = 'white';
+            }
             selector.style.color = '#3B82F6';
         });
 
