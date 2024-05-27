@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Element selectors
-    const getMetarBtn = document.getElementById('get-metar');
-    const getFlightBtn = document.getElementById('get-flight');
     const surfaceVisualizer = document.getElementById('surface-visualizer');
     const selectorSPJC = document.getElementById('SPJC-selector');
     const selectorSPRU = document.getElementById('SPRU-selector');
     const radarBox = document.getElementById('radar-box');
     const closeMiniRadarBtn = document.getElementById('close-mini-radar');
-    const openRadarBtn = document.getElementById('open-radar');
     const livestreamMetarBtn = document.getElementById('livestream-metar');
+    const metarSPRU = document.getElementById('metar-SPRU');
+    const metarSPJC = document.getElementById('metar-SPJC');
 
     const audioElements = [
         {
@@ -76,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.style.border = '0';
-        iframe.className = 'w-full rounded-lg aspect-[9/16] md:aspect-video';
+        iframe.className = 'w-full rounded-lg aspect-[9/16] md:aspect-square xl:aspect-video';
         surfaceVisualizer.appendChild(iframe);
         surfaceVisualizer.style.display = 'block';
 
@@ -93,52 +92,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedSelector = document.getElementById(`${airport}-selector`);
         selectedSelector.style.backgroundColor = '#3B82F6';
         selectedSelector.style.color = 'white';
+
+        // Show metar for the selected airport and hide the other one
+        if (airport === 'SPJC') {
+            metarSPJC.style.display = 'flex';
+            metarSPRU.style.display = 'none';
+        } else {
+            metarSPRU.style.display = 'flex';
+            metarSPJC.style.display = 'none';
+        }
     };
 
     const openUrlInNewTab = (url) => {
         window.open(url, '_blank');
-    };
-
-    const getMetar = () => {
-        const airport = document.getElementById('airport').value.trim();
-
-        if (!airport) {
-            showErrorNotification('Please enter a valid ICAO airport code.');
-            return;
-        }
-
-        openUrlInNewTab(`https://metar-taf.com/${airport}`);
-        document.getElementById('airport').value = '';
-    };
-
-    const showAircraftPosition = () => {
-        const registration = document.getElementById('flight').value.trim();
-
-        if (!registration) {
-            showErrorNotification('Please enter a valid aircraft registration number.');
-            return;
-        }
-
-        radarBox.innerHTML = '';
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.flightradar24.com/simple?reg=${registration}`;
-        iframe.style.border = '0';
-        iframe.className = 'w-full rounded-lg aspect-[9/16]	md:aspect-video';
-        radarBox.appendChild(iframe);
-        radarBox.style.display = 'block';
-        closeMiniRadarBtn.style.display = 'block';
-    };
-
-    const openRadar = () => {
-        const registration = document.getElementById('flight').value.trim();
-
-        if (!registration) {
-            showErrorNotification('Please enter a valid aircraft registration number.');
-            return;
-        }
-
-        openUrlInNewTab(`https://www.flightradar24.com/${registration}`);
-        document.getElementById('flight').value = '';
     };
 
     const showLivestreamMetar = () => {
@@ -170,9 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // General event listeners
     selectorSPJC.addEventListener('click', () => toggleSurface('SPJC'));
     selectorSPRU.addEventListener('click', () => toggleSurface('SPRU'));
-    getMetarBtn.addEventListener('click', getMetar);
-    getFlightBtn.addEventListener('click', showAircraftPosition);
-    openRadarBtn.addEventListener('click', openRadar);
     livestreamMetarBtn.addEventListener('click', showLivestreamMetar);
     closeMiniRadarBtn.addEventListener('click', hideRadarBox);
 });
