@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.style.border = '0';
-        iframe.className = 'w-full rounded-lg aspect-video';
+        iframe.className = 'w-full rounded-lg aspect-[9/16] md:aspect-video';
         surfaceVisualizer.appendChild(iframe);
         surfaceVisualizer.style.display = 'block';
 
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const iframe = document.createElement('iframe');
         iframe.src = `https://www.flightradar24.com/simple?reg=${registration}`;
         iframe.style.border = '0';
-        iframe.className = 'w-full rounded-lg aspect-video';
+        iframe.className = 'w-full rounded-lg aspect-[9/16]	md:aspect-video';
         radarBox.appendChild(iframe);
         radarBox.style.display = 'block';
         closeMiniRadarBtn.style.display = 'block';
