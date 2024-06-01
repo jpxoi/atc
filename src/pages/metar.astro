@@ -1,0 +1,62 @@
+---
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content={Astro.generator} />
+		<title>METAR | Air Traffic Control</title>
+
+		<link rel="stylesheet" href="/styles/player.css"/>
+
+		<meta name="description" content="A simple dashboard for air traffic control enthusiasts.">
+		<meta name="keywords" content="ATC, Air Traffic Control, Radar, FlightAware, METAR, Aviation, Flight, Aircraft, Live ATC">
+		<meta name="author" content="Jean Paul Fernandez">
+		<meta name="robots" content="index, follow">
+
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+
+		<meta name="twitter:site" content="@jpxoi">
+		<meta name="twitter:creator" content="@jpxoi">
+		<meta name="twitter:title" content="METAR | Air Traffic Control">
+		<meta name="twitter:description" content="A simple dashboard for air traffic control enthusiasts.">
+		
+		<meta property="og:title" content="METAR | Air Traffic Control">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://atc.jpxoi.com">
+		<meta property="og:description" content="A simple dashboard for air traffic control enthusiasts.">
+		<meta property="og:site_name" content="ATC Dashboard">
+		<meta property="og:locale" content="en_US">
+
+		<script fetchpriority="high" src="/js/metar.js"></script>
+	</head>
+	<body class="dark:bg-gray-900 dark:text-white">
+		<div class="mx-auto lg:mx-2 p-4 mt-4 dark:bg-gray-900">
+			<main>
+				<div class="grid grid-cols-1">
+                    <a href="/" class="text-blue-500 hover:text-blue-700 mb-2">← Back to Dashboard</a>
+                    <h3 class="text-2xl font-bold mb-4">🌥️ METAR</h3>
+					<div id="metar" class="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+						<div id="metar-SPRU" class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center">
+							<a class="w-[300px] sm:w-[500px] md:w-[370px] h-[270px]" href="https://metar-taf.com/SPRU" id="metartaf-myjZ3sai" style="font-size:18px; font-weight:500; color:#000; display:block">METAR Capitan FAP Carlos Martinez De Pinillos International Airport</a>
+
+							<a href="https://metar-taf.com/livestream/SPRU?zoom=85" target="_blank" rel="noreferrer" class="text-blue-500 hover:text-blue-700">Livestream METAR for TRU / SPRU</a>
+						</div>
+
+						<div id="metar-SPJC" class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center">
+							<a class="w-[300px] sm:w-[500px] md:w-[370px] h-[270px]" href="https://metar-taf.com/SPJC" id="metartaf-biLXE9nn" style="font-size:18px; font-weight:500; color:#000">METAR Jorge Chávez International Airport</a>
+							<a href="https://metar-taf.com/livestream/SPJC?zoom=85" target="_blank" rel="noreferrer" class="text-blue-500 hover:text-blue-700">Livestream METAR for LIM / SPJC</a>
+						</div>
+					</div>
+					
+				</div>
+			</main>
+		</div>
+
+		<script src="../helpers/app.js"></script>
+	</body>
+</html>
