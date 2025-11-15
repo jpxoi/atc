@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>ATC Dashboard | Air Traffic Control</title>
+
+    <link rel="stylesheet" href="/styles/player.css" />
+
+    <meta
+      name="description"
+      content="A simple dashboard for air traffic control enthusiasts."
+    />
+    <meta
+      name="keywords"
+      content="ATC, Air Traffic Control, Radar, FlightAware, METAR, Aviation, Flight, Aircraft, Live ATC"
+    />
+    <meta name="author" content="Jean Paul Fernandez" />
+    <meta name="robots" content="index, follow" />
+
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#111827"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <meta name="twitter:site" content="@jpxoi" />
+    <meta name="twitter:creator" content="@jpxoi" />
+    <meta name="twitter:title" content="ATC Dashboard | Air Traffic Control" />
+    <meta
+      name="twitter:description"
+      content="A simple dashboard for air traffic control enthusiasts."
+    />
+
+    <meta property="og:title" content="ATC Dashboard | Air Traffic Control" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://atc.jpxoi.com" />
+    <meta
+      property="og:description"
+      content="A simple dashboard for air traffic control enthusiasts."
+    />
+    <meta property="og:site_name" content="ATC Dashboard" />
+    <meta property="og:locale" content="en_US" />
+
+    <script is:inline fetchpriority="high" src="/js/metar.js"></script>
+  </head>
+  <body class="dark:bg-gray-900 dark:text-white">
+    <slot />
+  </body>
+</html>

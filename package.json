@@ -1,7 +1,7 @@
 {
-  "name": "atc-soft",
+  "name": "atc-dashboard",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,8 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.1.5",
-    "astro": "^5.7.4",
-    "tailwindcss": "^3.4.3"
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.15.8",
+    "tailwindcss": "^4.1.17"
   }
 }

@@ -1,124 +1,377 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content={Astro.generator} />
-		<title>ATC Dashboard | Air Traffic Control</title>
+<Layout>
+  <main class="mx-auto lg:mx-2 p-4 mt-4 dark:bg-gray-900">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-8">
+      <div class="flex flex-col md:col-span-3">
+        <div id="surface" class="flex flex-col space-y-4">
+          <h3 class="text-2xl font-bold">📡 Radar</h3>
+          <div
+            class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"
+          >
+            <p>Select an airport to view the surface traffic.</p>
+            <div
+              class="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 md:flex-col md:space-x-0 md:space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0"
+            >
+              <div class="flex flex-row space-x-4">
+                <button
+                  id="SPRU-selector"
+                  class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white"
+                  >TRU / SPRU</button
+                >
+                <button
+                  id="SPJC-selector"
+                  class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white"
+                  >LIM / SPJC</button
+                >
+              </div>
+              <a
+                href="https://www.flightradar24.com/-10.24,-76.72/7"
+                target="_blank"
+                rel="noreferrer"
+                class="flex flex-row justify-center max-w-fit bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white"
+                >Peruvian Airspace Radar ↗</a
+              >
+            </div>
+          </div>
+          <div
+            id="surface-visualizer"
+            class="hidden md:flex flex-col space-y-2 bg-gray-100 dark:bg-gray-800 rounded-lg aspect-9/16 md:aspect-square xl:aspect-video justify-center items-center"
+          >
+            <p class="text-lg text-blue-900 dark:text-blue-200">
+              Select an airport to view the surface traffic.
+            </p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Powered by FlightAware
+            </p>
+          </div>
+        </div>
+      </div>
 
-		<link rel="stylesheet" href="/styles/player.css"/>
+      <div id="metar" class="flex flex-col space-y-4 md:col-span-1">
+        <div id="atc" class="mt-8 md:mt-0 flex flex-col space-y-4">
+          <h3 class="text-2xl font-bold">🗼 Live ATC</h3>
 
-		<meta name="description" content="A simple dashboard for air traffic control enthusiasts.">
-		<meta name="keywords" content="ATC, Air Traffic Control, Radar, FlightAware, METAR, Aviation, Flight, Aircraft, Live ATC">
-		<meta name="author" content="Jean Paul Fernandez">
-		<meta name="robots" content="index, follow">
+          <div
+            id="sjpc_atc"
+            class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-4"
+          >
+            <h4 class="text-xl font-bold">LIM / SPJC Air Traffic Control</h4>
+            <div class="grid grid-cols-1 gap-4">
+              <div id="spjc_app" class="flex flex-col space-y-4">
+                <div
+                  class="flex flex-row space-x-4 items-center justify-between"
+                >
+                  <h5 class="text-lg font-bold">
+                    Approach <span
+                      class="text-sm text-gray-700 dark:text-gray-300"
+                      >(119.700)</span
+                    >
+                  </h5>
+                  <span
+                    id="spjc_app_live_indicator"
+                    class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg"
+                    >Offline</span
+                  >
+                </div>
+                <audio
+                  controls
+                  class="w-full"
+                  id="spjc_app_audio"
+                  preload="auto"
+                >
+                  <source
+                    src="https://d.liveatc.net/spjc1_app"
+                    type="audio/mpeg"
+                  />
+                  <p class="text-red-500">
+                    Your browser does not support the audio element.
+                  </p>
+                </audio>
+              </div>
 
-		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-		<meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+              <div id="spjc_twr" class="flex flex-col space-y-4">
+                <div
+                  class="flex flex-row space-x-4 items-center justify-between"
+                >
+                  <h5 class="text-lg font-bold">
+                    Tower <span class="text-sm text-gray-700 dark:text-gray-300"
+                      >(118.100)</span
+                    >
+                  </h5>
+                  <span
+                    id="spjc_twr_live_indicator"
+                    class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg"
+                    >Offline</span
+                  >
+                </div>
+                <audio
+                  controls
+                  class="w-full"
+                  id="spjc_twr_audio"
+                  preload="auto"
+                >
+                  <source
+                    src="https://d.liveatc.net/spjc1_twr"
+                    type="audio/mpeg"
+                  />
+                  <p class="text-red-500">
+                    Your browser does not support the audio element.
+                  </p>
+                </audio>
+              </div>
 
-		<meta name="twitter:site" content="@jpxoi">
-		<meta name="twitter:creator" content="@jpxoi">
-		<meta name="twitter:title" content="ATC Dashboard | Air Traffic Control">
-		<meta name="twitter:description" content="A simple dashboard for air traffic control enthusiasts.">
-		
-		<meta property="og:title" content="ATC Dashboard | Air Traffic Control">
-		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://atc.jpxoi.com">
-		<meta property="og:description" content="A simple dashboard for air traffic control enthusiasts.">
-		<meta property="og:site_name" content="ATC Dashboard">
-		<meta property="og:locale" content="en_US">
+              <div id="spjc_gnd" class="flex flex-col space-y-4">
+                <div
+                  class="flex flex-row space-x-4 items-center justify-between"
+                >
+                  <h5 class="text-lg font-bold">
+                    Ground <span
+                      class="text-sm text-gray-700 dark:text-gray-300"
+                      >(121.900)</span
+                    >
+                  </h5>
+                  <span
+                    id="spjc_gnd_live_indicator"
+                    class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg"
+                    >Offline</span
+                  >
+                </div>
+                <audio
+                  controls
+                  class="w-full"
+                  id="spjc_gnd_audio"
+                  preload="auto"
+                >
+                  <source
+                    src="https://d.liveatc.net/spjc1_gnd"
+                    type="audio/mpeg"
+                  />
+                  <p class="text-red-500">
+                    Your browser does not support the audio element.
+                  </p>
+                </audio>
+              </div>
+            </div>
+          </div>
+        </div>
 
-		<script fetchpriority="high" src="/js/metar.js"></script>
-	</head>
-	<body class="dark:bg-gray-900 dark:text-white">
-		<div class="mx-auto lg:mx-2 p-4 mt-4 dark:bg-gray-900">
-			<main>
-				<div class="grid grid-cols-1 md:grid-cols-[3fr,1fr] gap-0 md:gap-8">
-					<div class="flex flex-col">
-						<div id="surface" class="flex flex-col space-y-4">
-							<h3 class="text-2xl font-bold">📡 Radar</h3>
-							<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-								<p>Select an airport to view the surface traffic.</p>
-								<div class="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 md:flex-col md:space-x-0 md:space-y-4 lg:flex-row lg:space-x-4 lg:space-y-0">
-									<div class="flex flex-row space-x-4">
-										<button id="SPRU-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white">TRU / SPRU</button>
-										<button id="SPJC-selector" class="bg-white dark:bg-gray-700 text-blue-500 py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white">LIM / SPJC</button>
-									</div>
-									<a href="https://www.flightradar24.com/-10.24,-76.72/7" target="_blank" rel="noreferrer" class="flex flex-row justify-center max-w-fit bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 hover:text-white">Peruvian Airspace Radar ↗</a>
-								</div>
-							</div>
-							<div id="surface-visualizer" class="hidden md:flex flex-col space-y-2 bg-gray-100 dark:bg-gray-800 rounded-lg aspect-[9/16] md:aspect-square xl:aspect-video justify-center items-center">
-								<p class="text-lg text-blue-900 dark:text-blue-200">Select an airport to view the surface traffic.</p>
-								<p class="text-sm text-gray-600 dark:text-gray-400">Powered by FlightAware</p>
-							</div>
-						</div>
-					</div>
-					
+        <h3 class="text-2xl font-bold">🌥️ METAR</h3>
+        <div
+          id="metar-SPRU"
+          class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center"
+        >
+          <a
+            class="w-[300px] sm:w-[500px] md:w-[370px] h-[270px]"
+            href="https://metar-taf.com/SPRU"
+            id="metartaf-myjZ3sai"
+            style="font-size:18px; font-weight:500; color:#000; display:block"
+            >METAR Capitan FAP Carlos Martinez De Pinillos International Airport</a
+          >
 
-					<div id="metar" class="flex flex-col space-y-4">
-						<div id="atc" class="mt-8 md:mt-0 flex flex-col space-y-4">
-							<h3 class="text-2xl font-bold">🗼 Live ATC</h3>
+          <a
+            href="https://metar-taf.com/livestream/SPRU?zoom=85"
+            target="_blank"
+            rel="noreferrer"
+            class="text-blue-500 hover:text-blue-700"
+            >Livestream METAR for TRU / SPRU</a
+          >
+        </div>
 
-							<div id="sjpc_atc" class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-4">
-								<h4 class="text-xl font-bold">LIM / SPJC Air Traffic Control</h4>
-								<div class="grid grid-cols-1 gap-4">
-									<div id="spjc_app" class="flex flex-col space-y-4">
-										<div class="flex flex-row space-x-4 items-center justify-between">
-											<h5 class="text-lg font-bold">Approach <span class="text-sm text-gray-700 dark:text-gray-300">(119.700)</span></h5>
-											<span id="spjc_app_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg">Offline</span>
-										</div>
-										<audio controls class="w-full" id="spjc_app_audio" preload="auto">
-											<source src="https://d.liveatc.net/spjc1_app" type="audio/mpeg">
-											<p class="text-red-500">Your browser does not support the audio element.</p>
-										</audio>
-									</div>
-									
-									<div id="spjc_twr" class="flex flex-col space-y-4">
-										<div class="flex flex-row space-x-4 items-center justify-between">
-											<h5 class="text-lg font-bold">Tower <span class="text-sm text-gray-700 dark:text-gray-300">(118.100)</span></h5>
-											<span id="spjc_twr_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg">Offline</span>
-										</div>
-										<audio controls class="w-full" id="spjc_twr_audio" preload="auto">
-											<source src="https://d.liveatc.net/spjc1_twr" type="audio/mpeg">
-											<p class="text-red-500">Your browser does not support the audio element.</p>
-										</audio>
-									</div>
+        <div
+          id="metar-SPJC"
+          class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center hidden"
+        >
+          <a
+            class="w-[300px] sm:w-[500px] md:w-[370px] h-[270px]"
+            href="https://metar-taf.com/SPJC"
+            id="metartaf-biLXE9nn"
+            style="font-size:18px; font-weight:500; color:#000"
+            >METAR Jorge Chávez International Airport</a
+          >
+          <a
+            href="https://metar-taf.com/livestream/SPJC?zoom=85"
+            target="_blank"
+            rel="noreferrer"
+            class="text-blue-500 hover:text-blue-700"
+            >Livestream METAR for LIM / SPJC</a
+          >
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Element selectors
+    const surfaceVisualizer = document.getElementById("surface-visualizer");
+    const selectorSPJC = document.getElementById("SPJC-selector");
+    const selectorSPRU = document.getElementById("SPRU-selector");
+    const radarBox = document.getElementById("radar-box");
+    const closeMiniRadarBtn = document.getElementById("close-mini-radar");
+    const livestreamMetarBtn = document.getElementById("livestream-metar");
+    const metarSPRU = document.getElementById("metar-SPRU");
+    const metarSPJC = document.getElementById("metar-SPJC");
 
-									<div id="spjc_gnd" class="flex flex-col space-y-4">
-										<div class="flex flex-row space-x-4 items-center justify-between">
-											<h5 class="text-lg font-bold">Ground <span class="text-sm text-gray-700 dark:text-gray-300">(121.900)</span></h5>
-											<span id="spjc_gnd_live_indicator" class="text-sm bg-gray-500 dark:bg-gray-700 text-white px-2 py-1 rounded-lg">Offline</span>
-										</div>
-										<audio controls class="w-full" id="spjc_gnd_audio" preload="auto">
-											<source src="https://d.liveatc.net/spjc1_gnd" type="audio/mpeg">
-											<p class="text-red-500">Your browser does not support the audio element.</p>
-										</audio>
-									</div>
-								</div>
-							</div>
-						</div>
+    const audioElements = [
+      {
+        audio: document.getElementById("spjc_app_audio"),
+        indicator: document.getElementById("spjc_app_live_indicator"),
+      },
+      {
+        audio: document.getElementById("spjc_twr_audio"),
+        indicator: document.getElementById("spjc_twr_live_indicator"),
+      },
+      {
+        audio: document.getElementById("spjc_gnd_audio"),
+        indicator: document.getElementById("spjc_gnd_live_indicator"),
+      },
+    ];
 
-						<h3 class="text-2xl font-bold">🌥️ METAR</h3>
-						<div id="metar-SPRU" class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center">
-							<a class="w-[300px] sm:w-[500px] md:w-[370px] h-[270px]" href="https://metar-taf.com/SPRU" id="metartaf-myjZ3sai" style="font-size:18px; font-weight:500; color:#000; display:block">METAR Capitan FAP Carlos Martinez De Pinillos International Airport</a>
+    const updateIndicator = (
+      indicator: HTMLElement,
+      removeClass: string,
+      addClass: string,
+      text: string
+    ) => {
+      // If user prefers dark mode, add dark: prefix to the classes
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        indicator.classList.remove("dark:bg-gray-700");
 
-							<a href="https://metar-taf.com/livestream/SPRU?zoom=85" target="_blank" rel="noreferrer" class="text-blue-500 hover:text-blue-700">Livestream METAR for TRU / SPRU</a>
-						</div>
+        switch (addClass) {
+          case "bg-red-500":
+            indicator.classList.add("bg-red-700");
+            break;
+          case "bg-yellow-500":
+            indicator.classList.add("bg-yellow-700");
+            break;
+          case "bg-gray-500":
+            indicator.classList.add("bg-gray-700");
+            break;
+        }
 
-						<div id="metar-SPJC" class="flex flex-col space-y-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg justify-center items-center hidden">
-							<a class="w-[300px] sm:w-[500px] md:w-[370px] h-[270px]" href="https://metar-taf.com/SPJC" id="metartaf-biLXE9nn" style="font-size:18px; font-weight:500; color:#000">METAR Jorge Chávez International Airport</a>
-							<a href="https://metar-taf.com/livestream/SPJC?zoom=85" target="_blank" rel="noreferrer" class="text-blue-500 hover:text-blue-700">Livestream METAR for LIM / SPJC</a>
-						</div>
-					</div>
-					
-				</div>
-			</main>
-		</div>
+        switch (removeClass) {
+          case "bg-red-500":
+            indicator.classList.remove("bg-red-700");
+            break;
+          case "bg-yellow-500":
+            indicator.classList.remove("bg-yellow-700");
+            break;
+          case "bg-gray-500":
+            indicator.classList.remove("bg-gray-700");
+            break;
+        }
+      }
 
-		<script src="../helpers/app.js"></script>
-	</body>
-</html>
+      indicator.classList.remove(removeClass);
+      indicator.classList.add(addClass);
+      indicator.innerText = text;
+    };
+
+    const showErrorNotification = (message: string) => {
+      const notification = document.createElement("div");
+      notification.className =
+        "bg-red-500 dark:bg-red-700 text-white p-3 rounded-lg text-center fixed top-10 left-10 right-10 z-50 max-w-2xl mx-auto";
+      notification.innerText = message;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        notification.style.display = "none";
+      }, 3000);
+    };
+
+    const toggleSurface = (airport: string) => {
+      surfaceVisualizer.innerHTML = "";
+      const url = `https://www.flightaware.com/live/airport/${airport}/surface`;
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.style.border = "0";
+      iframe.className =
+        "w-full rounded-lg aspect-[9/16] md:aspect-square xl:aspect-video";
+      surfaceVisualizer.appendChild(iframe);
+      surfaceVisualizer.style.display = "block";
+
+      [selectorSPJC, selectorSPRU].forEach((selector) => {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          selector.style.backgroundColor = "#374151";
+        } else {
+          selector.style.backgroundColor = "white";
+        }
+        selector.style.color = "#3B82F6";
+      });
+
+      const selectedSelector = document.getElementById(`${airport}-selector`);
+      selectedSelector.style.backgroundColor = "#3B82F6";
+      selectedSelector.style.color = "white";
+
+      // Show metar for the selected airport and hide the other one
+      if (airport === "SPJC") {
+        metarSPJC.style.display = "flex";
+        metarSPRU.style.display = "none";
+      } else {
+        metarSPRU.style.display = "flex";
+        metarSPJC.style.display = "none";
+      }
+    };
+
+    const openUrlInNewTab = (url: string) => {
+      window.open(url, "_blank");
+    };
+
+    const showLivestreamMetar = () => {
+      const airport = (
+        document.getElementById("airport") as HTMLInputElement
+      ).value.trim();
+
+      if (!airport) {
+        showErrorNotification("Please enter a valid ICAO airport code.");
+        return;
+      }
+
+      openUrlInNewTab(`https://metar-taf.com/livestream/${airport}?zoom=85`);
+      (document.getElementById("airport") as HTMLInputElement).value = "";
+    };
+
+    const hideRadarBox = () => {
+      radarBox.style.display = "none";
+      radarBox.innerHTML = "";
+      closeMiniRadarBtn.style.display = "none";
+    };
+
+    // Event listeners for audio elements
+    audioElements.forEach(
+      ({
+        audio,
+        indicator,
+      }: {
+        audio: HTMLAudioElement;
+        indicator: HTMLElement;
+      }) => {
+        audio.addEventListener("play", () =>
+          updateIndicator(
+            indicator,
+            "bg-gray-500",
+            "bg-yellow-500",
+            "Buffering"
+          )
+        );
+        audio.addEventListener("error", () =>
+          updateIndicator(indicator, "bg-yellow-500", "bg-gray-500", "Offline")
+        );
+        audio.addEventListener("playing", () =>
+          updateIndicator(indicator, "bg-yellow-500", "bg-red-500", "Live")
+        );
+        audio.addEventListener("pause", () =>
+          updateIndicator(indicator, "bg-red-500", "bg-gray-500", "Paused")
+        );
+      }
+    );
+
+    // General event listeners
+    selectorSPJC.addEventListener("click", () => toggleSurface("SPJC"));
+    selectorSPRU.addEventListener("click", () => toggleSurface("SPRU"));
+    livestreamMetarBtn.addEventListener("click", showLivestreamMetar);
+    closeMiniRadarBtn.addEventListener("click", hideRadarBox);
+  });
+</script>
