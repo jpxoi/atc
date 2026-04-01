@@ -1,7 +1,7 @@
 {
   "name": "atc-dashboard",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,8 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
-    "astro": "^5.18.1",
-    "tailwindcss": "^4.1.17"
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.2",
+    "tailwindcss": "^4.2.2"
   }
 }
