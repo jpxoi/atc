@@ -1,0 +1,32 @@
+---
+import type { Airport } from "../data/airports";
+
+interface Props {
+  airports: readonly Airport[];
+  selectedIcao: string;
+}
+
+const { airports, selectedIcao } = Astro.props;
+
+const idleClass =
+  "rounded-lg bg-white px-4 py-2 text-blue-500 hover:bg-blue-700 hover:text-white dark:bg-gray-700";
+---
+
+<div class="flex flex-row flex-wrap gap-2">
+  {
+    airports.map((airport) => (
+      <button
+        type="button"
+        data-airport-selector
+        data-icao={airport.icao}
+        aria-pressed={airport.icao === selectedIcao ? "true" : "false"}
+        class:list={[
+          idleClass,
+          "aria-pressed:bg-blue-500 aria-pressed:text-white aria-pressed:hover:bg-blue-600",
+        ]}
+      >
+        {airport.iata} / {airport.icao}
+      </button>
+    ))
+  }
+</div>

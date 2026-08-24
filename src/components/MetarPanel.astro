@@ -1,0 +1,36 @@
+---
+import type { Airport } from "../data/airports";
+import { metarLivestreamUrl, metarSiteUrl } from "../lib/metar";
+
+interface Props {
+  airport: Airport;
+}
+
+const { airport } = Astro.props;
+---
+
+<section class="flex flex-col space-y-4">
+  <h2 class="text-2xl font-bold">🌥️ METAR</h2>
+  <div
+    class="flex flex-col items-center justify-center space-y-4 rounded-lg bg-gray-100 p-4 dark:bg-gray-800"
+  >
+    <div id="metar-widget">
+      <a
+        class="block h-67.5 w-75 text-lg font-medium text-black sm:w-125 md:w-92.5"
+        href={metarSiteUrl(airport.icao)}
+        id="metartaf-atcDash"
+      >
+        METAR {airport.name}
+      </a>
+    </div>
+    <a
+      id="metar-livestream"
+      href={metarLivestreamUrl(airport.icao)}
+      target="_blank"
+      rel="noreferrer"
+      class="text-blue-500 hover:text-blue-700"
+    >
+      Livestream METAR for {airport.iata} / {airport.icao}
+    </a>
+  </div>
+</section>

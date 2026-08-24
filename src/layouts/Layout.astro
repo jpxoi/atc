@@ -1,5 +1,15 @@
 ---
 import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "ATC Dashboard | Air Traffic Control",
+  description = "Live air traffic control audio and METAR for Peruvian airports.",
+} = Astro.props;
 ---
 
 <html lang="en">
@@ -8,17 +18,12 @@ import "../styles/global.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <title>ATC Dashboard | Air Traffic Control</title>
+    <title>{title}</title>
 
-    <link rel="stylesheet" href="/styles/player.css" />
-
-    <meta
-      name="description"
-      content="A simple dashboard for air traffic control enthusiasts."
-    />
+    <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="ATC, Air Traffic Control, Radar, FlightAware, METAR, Aviation, Flight, Aircraft, Live ATC"
+      content="ATC, Air Traffic Control, METAR, Aviation, Live ATC, Peru"
     />
     <meta name="author" content="Jean Paul Fernandez" />
     <meta name="robots" content="index, follow" />
@@ -36,23 +41,15 @@ import "../styles/global.css";
 
     <meta name="twitter:site" content="@jpxoi" />
     <meta name="twitter:creator" content="@jpxoi" />
-    <meta name="twitter:title" content="ATC Dashboard | Air Traffic Control" />
-    <meta
-      name="twitter:description"
-      content="A simple dashboard for air traffic control enthusiasts."
-    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
 
-    <meta property="og:title" content="ATC Dashboard | Air Traffic Control" />
+    <meta property="og:title" content={title} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://atc.jpxoi.com" />
-    <meta
-      property="og:description"
-      content="A simple dashboard for air traffic control enthusiasts."
-    />
+    <meta property="og:description" content={description} />
     <meta property="og:site_name" content="ATC Dashboard" />
     <meta property="og:locale" content="en_US" />
-
-    <script is:inline fetchpriority="high" src="/js/metar.js"></script>
   </head>
   <body class="dark:bg-gray-900 dark:text-white">
     <slot />
