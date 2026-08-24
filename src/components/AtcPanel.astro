@@ -59,10 +59,42 @@ const badgeClass =
                   ))}
                 </tbody>
               </table>
-              <audio controls class="w-full" data-atc-audio preload="none">
-                <source src={streamUrl(feed.mount)} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+              <div class="flex items-center">
+                <button
+                  type="button"
+                  data-atc-toggle
+                  aria-pressed="false"
+                  aria-label={`Play ${feed.title}`}
+                  class="group inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 aria-pressed:bg-red-600 aria-pressed:hover:bg-red-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white dark:aria-pressed:bg-red-600 dark:aria-pressed:text-white dark:aria-pressed:hover:bg-red-700"
+                >
+                  <svg
+                    class="size-4 group-aria-pressed:hidden"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 3.25v9.5L13 8 5 3.25Z" />
+                  </svg>
+                  <svg
+                    class="hidden size-4 group-aria-pressed:block"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M4.5 4.5h7v7h-7v-7Z" />
+                  </svg>
+                  <span class="group-aria-pressed:hidden">Play</span>
+                  <span class="hidden group-aria-pressed:inline">Stop</span>
+                </button>
+                <audio
+                  class="hidden"
+                  data-atc-audio
+                  data-src={streamUrl(feed.mount)}
+                  preload="none"
+                >
+                  <source src={streamUrl(feed.mount)} type="audio/mpeg" />
+                </audio>
+              </div>
             </article>
           ))}
         </div>

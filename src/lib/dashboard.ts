@@ -1,5 +1,5 @@
 import type { Airport } from "../data/airports";
-import { bindAtcPlayers } from "./atc-player";
+import { bindAtcPlayers, stopAllAtcPlayers } from "./atc-player";
 import { loadMetarWidget } from "./metar";
 
 function setPressed(button: HTMLButtonElement, pressed: boolean): void {
@@ -28,7 +28,15 @@ export function initDashboard(airports: readonly Airport[]): void {
 
   bindAtcPlayers();
 
+  const selected = selectors.find((button) => button.getAttribute("aria-pressed") === "true");
+  let selectedIcao = selected?.dataset.icao;
+
   const selectAirport = (icao: string): void => {
+    if (icao !== selectedIcao) {
+      stopAllAtcPlayers();
+      selectedIcao = icao;
+    }
+
     for (const button of selectors) {
       setPressed(button, button.dataset.icao === icao);
     }

@@ -34,7 +34,7 @@ export const airports: Airport[] = [
       {
         id: "twre",
         title: "Tower (East)",
-        mount: "spjc1_twr",
+        mount: "spjc1_twr_east",
         facilities: [
           { name: "Lima Tower (East 16L/34R)", frequency: "118.100" },
         ],
@@ -42,7 +42,7 @@ export const airports: Airport[] = [
       {
         id: "twrw",
         title: "Tower (West)",
-        mount: "spjc1_twrw",
+        mount: "spjc1_twr_west",
         facilities: [
           { name: "Lima Tower (West 16R/34L)", frequency: "118.750" },
         ],
