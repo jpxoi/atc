@@ -1,22 +1,14 @@
-type IndicatorState = "offline" | "buffering" | "live" | "paused";
-
-const STATE_CLASS: Record<IndicatorState, string> = {
-  offline: "bg-gray-500 dark:bg-gray-700",
-  buffering: "bg-yellow-500 dark:bg-yellow-700",
-  live: "bg-red-500 dark:bg-red-700",
-  paused: "bg-gray-500 dark:bg-gray-700",
-};
+type IndicatorState = "idle" | "connecting" | "live" | "offline";
 
 const STATE_LABEL: Record<IndicatorState, string> = {
-  offline: "Offline",
-  buffering: "Buffering",
+  idle: "Idle",
+  connecting: "Connecting",
   live: "Live",
-  paused: "Paused",
+  offline: "Offline",
 };
 
 function setIndicator(el: HTMLElement, state: IndicatorState): void {
-  el.classList.remove(...Object.values(STATE_CLASS).flatMap((value) => value.split(" ")));
-  el.classList.add(...STATE_CLASS[state].split(" "));
+  el.dataset.state = state;
   el.textContent = STATE_LABEL[state];
 }
 
@@ -29,9 +21,13 @@ export function bindAtcPlayers(): void {
       ?.querySelector<HTMLElement>("[data-atc-indicator]");
     if (!indicator) continue;
 
-    audio.addEventListener("play", () => setIndicator(indicator, "buffering"));
+    audio.addEventListener("play", () => setIndicator(indicator, "connecting"));
+    audio.addEventListener("waiting", () => setIndicator(indicator, "connecting"));
+    audio.addEventListener("stalled", () => setIndicator(indicator, "connecting"));
     audio.addEventListener("playing", () => setIndicator(indicator, "live"));
-    audio.addEventListener("pause", () => setIndicator(indicator, "paused"));
+    audio.addEventListener("pause", () => {
+      setIndicator(indicator, audio.error ? "offline" : "idle");
+    });
     audio.addEventListener("error", () => setIndicator(indicator, "offline"));
   }
 }

@@ -13,20 +13,16 @@ export type AtcStream = {
 export type Airport = {
   icao: string;
   iata: string;
+  city: string;
   name: string;
   feeds: AtcStream[];
 };
 
 export const airports: Airport[] = [
   {
-    icao: "SPRU",
-    iata: "TRU",
-    name: "Capitan FAP Carlos Martinez De Pinillos International Airport",
-    feeds: [],
-  },
-  {
     icao: "SPJC",
     iata: "LIM",
+    city: "Lima",
     name: "Jorge Chávez International Airport",
     feeds: [
       {
@@ -36,11 +32,18 @@ export const airports: Airport[] = [
         facilities: [{ name: "Lima Approach", frequency: "119.700" }],
       },
       {
-        id: "twr",
-        title: "Tower",
+        id: "twre",
+        title: "Tower (East)",
         mount: "spjc1_twr",
         facilities: [
           { name: "Lima Tower (East 16L/34R)", frequency: "118.100" },
+        ],
+      },
+      {
+        id: "twrw",
+        title: "Tower (West)",
+        mount: "spjc1_twrw",
+        facilities: [
           { name: "Lima Tower (West 16R/34L)", frequency: "118.750" },
         ],
       },
@@ -55,6 +58,7 @@ export const airports: Airport[] = [
   {
     icao: "SPQU",
     iata: "AQP",
+    city: "Arequipa",
     name: "Rodríguez Ballón International Airport",
     feeds: [
       {
@@ -92,6 +96,7 @@ export const airports: Airport[] = [
   {
     icao: "SPZO",
     iata: "CUZ",
+    city: "Cusco",
     name: "Alejandro Velasco Astete International Airport",
     feeds: [
       {
@@ -116,6 +121,13 @@ export const airports: Airport[] = [
         ],
       },
     ],
+  },
+  {
+    icao: "SPRU",
+    iata: "TRU",
+    city: "Trujillo",
+    name: "Capitan FAP Carlos Martinez De Pinillos International Airport",
+    feeds: [],
   },
 ];
 

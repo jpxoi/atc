@@ -6,6 +6,17 @@ function setPressed(button: HTMLButtonElement, pressed: boolean): void {
   button.setAttribute("aria-pressed", String(pressed));
 }
 
+function airportMeta(airport: Airport): string {
+  return `${airport.iata} / ${airport.icao} · ${airport.city}`;
+}
+
+function updateHeading(airport: Airport): void {
+  const name = document.getElementById("airport-name");
+  const meta = document.getElementById("airport-meta");
+  if (name) name.textContent = airport.name;
+  if (meta) meta.textContent = airportMeta(airport);
+}
+
 export function initDashboard(airports: readonly Airport[]): void {
   const selectors = [
     ...document.querySelectorAll<HTMLButtonElement>("[data-airport-selector]"),
@@ -23,7 +34,10 @@ export function initDashboard(airports: readonly Airport[]): void {
     }
 
     const airport = airports.find((item) => item.icao === icao);
-    if (airport) loadMetarWidget(airport);
+    if (airport) {
+      updateHeading(airport);
+      loadMetarWidget(airport);
+    }
 
     let hasAtc = false;
     for (const panel of atcPanels) {
