@@ -7,9 +7,6 @@ const METAR_HOST_ID = "metar-widget";
 export const metarSiteUrl = (icao: string): string =>
   `https://metar-taf.com/${icao}`;
 
-export const metarLivestreamUrl = (icao: string): string =>
-  `https://metar-taf.com/livestream/${icao}?zoom=85`;
-
 function embedQuery(target: string): string {
   return prefersDark()
     ? `bg_color=1f2937&layout=landscape&qnh=hPa&rh=rh&target=${target}`
@@ -29,17 +26,6 @@ export function injectMetarEmbed(
   parent.appendChild(script);
 }
 
-function setLink(
-  id: string,
-  href: string,
-  text: string,
-): void {
-  const el = document.getElementById(id);
-  if (!(el instanceof HTMLAnchorElement)) return;
-  el.href = href;
-  el.textContent = text;
-}
-
 export function loadMetarWidget(airport: Airport): void {
   const host = document.getElementById(METAR_HOST_ID);
   if (!host) return;
@@ -57,12 +43,6 @@ export function loadMetarWidget(airport: Airport): void {
   host.appendChild(link);
 
   injectMetarEmbed(airport.icao, METAR_TARGET, host);
-
-  setLink(
-    "metar-livestream",
-    metarLivestreamUrl(airport.icao),
-    `Livestream METAR for ${airport.iata} / ${airport.icao}`,
-  );
 }
 
 export function initMetarEmbeds(): void {
