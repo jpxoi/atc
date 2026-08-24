@@ -9,17 +9,29 @@ const selectedAirport = getAirport(DEFAULT_ICAO) ?? airports[0];
 ---
 
 <Layout>
-  <main class="mx-auto max-w-6xl space-y-8 p-4">
+  <main class="mx-auto max-w-6xl space-y-6 p-4">
     <header class="space-y-4">
-      <h1 class="text-3xl font-bold">ATC Dashboard</h1>
+      <div class="space-y-1">
+        <p class="text-sm font-medium tracking-wide text-gray-500 dark:text-gray-400">
+          ATC Dashboard
+        </p>
+        <h1 id="airport-name" class="text-2xl font-bold tracking-tight sm:text-3xl">
+          {selectedAirport.name}
+        </h1>
+        <p id="airport-meta" class="text-gray-600 dark:text-gray-400">
+          {selectedAirport.iata} / {selectedAirport.icao} · {selectedAirport.city}
+        </p>
+      </div>
       <AirportSwitcher
         airports={airports}
         selectedIcao={selectedAirport.icao}
       />
     </header>
 
-    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <AtcPanel airports={airports} selectedIcao={selectedAirport.icao} />
+    <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <AtcPanel airports={airports} selectedIcao={selectedAirport.icao} />
+      </div>
       <MetarPanel airport={selectedAirport} />
     </div>
   </main>

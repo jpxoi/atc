@@ -7,12 +7,13 @@ interface Props {
 }
 
 const { airports, selectedIcao } = Astro.props;
-
-const idleClass =
-  "rounded-lg bg-white px-4 py-2 text-blue-500 hover:bg-blue-700 hover:text-white dark:bg-gray-700";
 ---
 
-<div class="flex flex-row flex-wrap gap-2">
+<div
+  role="group"
+  aria-label="Airport"
+  class="grid grid-cols-4 gap-1 rounded-xl bg-gray-100 p-1 dark:bg-gray-800"
+>
   {
     airports.map((airport) => (
       <button
@@ -20,12 +21,12 @@ const idleClass =
         data-airport-selector
         data-icao={airport.icao}
         aria-pressed={airport.icao === selectedIcao ? "true" : "false"}
-        class:list={[
-          idleClass,
-          "aria-pressed:bg-blue-500 aria-pressed:text-white aria-pressed:hover:bg-blue-600",
-        ]}
+        class="flex min-w-0 flex-col items-center rounded-lg px-2 py-2 text-gray-600 hover:text-gray-900 aria-pressed:bg-white aria-pressed:text-gray-900 aria-pressed:shadow-sm dark:text-gray-300 dark:hover:text-white dark:aria-pressed:bg-gray-700 dark:aria-pressed:text-white"
       >
-        {airport.iata} / {airport.icao}
+        <span class="text-sm font-semibold tracking-wide">{airport.iata}</span>
+        <span class="max-w-full truncate text-xs text-gray-500 dark:text-gray-400">
+          {airport.city}
+        </span>
       </button>
     ))
   }
