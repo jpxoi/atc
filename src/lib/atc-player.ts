@@ -39,7 +39,7 @@ function setToggle(audio: HTMLAudioElement, active: boolean): void {
   button.setAttribute("aria-label", `${active ? "Stop" : "Play"} ${title}`);
 }
 
-function streamUrl(audio: HTMLAudioElement): string {
+function streamSrc(audio: HTMLAudioElement): string {
   return audio.dataset.src ?? "";
 }
 
@@ -59,7 +59,7 @@ function armConnectTimer(audio: HTMLAudioElement, indicator: HTMLElement): void 
 }
 
 function resetSrc(audio: HTMLAudioElement): void {
-  const url = streamUrl(audio);
+  const url = streamSrc(audio);
   const source = audio.querySelector("source");
 
   resetting.add(audio);
@@ -85,7 +85,7 @@ function stopPlayer(
 }
 
 function startPlayer(audio: HTMLAudioElement, indicator: HTMLElement): void {
-  const url = streamUrl(audio);
+  const url = streamSrc(audio);
   const source = audio.querySelector("source");
   if (source && url && !source.getAttribute("src")) source.src = url;
 
