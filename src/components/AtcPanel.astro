@@ -15,7 +15,7 @@ const { airports, selectedIcao } = Astro.props;
 const atcAirports = airports.filter((airport) => airport.feeds.length > 0);
 
 const badgeClass =
-  "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium text-white data-[state=idle]:bg-gray-400 data-[state=connecting]:bg-amber-500 data-[state=live]:bg-red-500 data-[state=offline]:bg-zinc-800 dark:data-[state=idle]:bg-gray-500 dark:data-[state=connecting]:bg-amber-600 dark:data-[state=live]:bg-red-600 dark:data-[state=offline]:bg-black";
+  "group inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium data-[state=idle]:bg-gray-200 data-[state=idle]:text-gray-600 data-[state=connecting]:bg-amber-500 data-[state=connecting]:text-white data-[state=live]:bg-gray-200 data-[state=live]:text-gray-700 data-[state=offline]:bg-gray-800 data-[state=offline]:text-gray-200 dark:data-[state=idle]:bg-gray-700 dark:data-[state=idle]:text-gray-300 dark:data-[state=connecting]:bg-amber-600 dark:data-[state=live]:bg-gray-700 dark:data-[state=live]:text-gray-100 dark:data-[state=offline]:bg-black";
 
 const iconClass = "pointer-events-none";
 ---
@@ -33,7 +33,7 @@ const iconClass = "pointer-events-none";
           {airport.feeds.map((feed) => (
             <article
               data-atc-feed
-              class="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 data-[listening=true]:border-emerald-400 data-[listening=true]:ring-1 data-[listening=true]:ring-emerald-400/80"
+              class="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 data-[live=true]:cursor-pointer data-[listening=true]:border-emerald-400 data-[listening=true]:ring-1 data-[listening=true]:ring-emerald-400/80"
             >
               <div class="flex items-start justify-between gap-3">
                 <h3 class="text-base font-semibold">{feed.title}</h3>
@@ -42,7 +42,8 @@ const iconClass = "pointer-events-none";
                   data-state="idle"
                   class={badgeClass}
                 >
-                  Idle
+                  <span class="hidden size-1.5 rounded-full bg-red-500 group-data-[state=live]:block"></span>
+                  <span data-atc-indicator-label>Idle</span>
                 </span>
               </div>
               <div class="mt-1 grid grid-cols-[1fr_auto] gap-x-4 gap-y-0.5 text-sm">
@@ -64,16 +65,18 @@ const iconClass = "pointer-events-none";
                   class="group flex size-10 items-center justify-center rounded-full border border-gray-300 text-gray-800 hover:bg-gray-100 aria-pressed:border-red-600 aria-pressed:bg-red-600 aria-pressed:text-white dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700 dark:aria-pressed:border-red-600 dark:aria-pressed:bg-red-600"
                 >
                   <Play
-                    size={16}
+                    size={18}
                     fill="currentColor"
                     stroke="none"
-                    class:list={[iconClass, "group-aria-pressed:hidden"]}
+                    stroke-width={0}
+                    class:list={[iconClass, "fill-current stroke-none group-aria-pressed:hidden"]}
                   />
                   <Square
-                    size={12}
+                    size={13}
                     fill="currentColor"
                     stroke="none"
-                    class:list={[iconClass, "hidden group-aria-pressed:block"]}
+                    stroke-width={0}
+                    class:list={[iconClass, "hidden fill-current stroke-none group-aria-pressed:block"]}
                   />
                 </button>
                 <button
@@ -83,7 +86,7 @@ const iconClass = "pointer-events-none";
                   disabled
                   aria-pressed="false"
                   aria-label={`Listen to ${feed.title}`}
-                  class="group flex size-10 items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:bg-gray-100 aria-pressed:border-emerald-500 aria-pressed:bg-emerald-50 aria-pressed:text-emerald-600 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:aria-pressed:border-emerald-500 dark:aria-pressed:bg-emerald-950 dark:aria-pressed:text-emerald-400"
+                  class="group inline-flex h-10 items-center gap-1.5 rounded-full border border-gray-300 px-2.5 text-gray-500 hover:bg-gray-100 aria-pressed:border-emerald-500 aria-pressed:bg-emerald-50 aria-pressed:text-emerald-600 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:aria-pressed:border-emerald-500 dark:aria-pressed:bg-emerald-950 dark:aria-pressed:text-emerald-400"
                 >
                   <VolumeOff
                     size={16}
@@ -93,6 +96,8 @@ const iconClass = "pointer-events-none";
                     size={16}
                     class:list={[iconClass, "hidden group-aria-pressed:block"]}
                   />
+                  <span class="text-xs font-medium group-aria-pressed:hidden">Listen</span>
+                  <span class="hidden text-xs font-medium group-aria-pressed:inline">Listening</span>
                 </button>
                 <audio
                   class="hidden"

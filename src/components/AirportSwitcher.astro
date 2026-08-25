@@ -21,10 +21,10 @@ const { airports, selectedIcao } = Astro.props;
         data-airport-selector
         data-icao={airport.icao}
         aria-pressed={airport.icao === selectedIcao ? "true" : "false"}
-        class="flex min-w-0 flex-col items-center rounded-lg px-2 py-2 text-gray-600 hover:text-gray-900 aria-pressed:bg-white aria-pressed:text-gray-900 aria-pressed:shadow-sm dark:text-gray-300 dark:hover:text-white dark:aria-pressed:bg-gray-700 dark:aria-pressed:text-white"
+        class="group flex min-w-0 flex-col items-center rounded-lg px-2 py-2 text-gray-600 hover:text-gray-900 aria-pressed:bg-gray-900 aria-pressed:text-white aria-pressed:shadow-sm dark:text-gray-400 dark:hover:text-white dark:aria-pressed:bg-white dark:aria-pressed:text-gray-900"
       >
         <span class="text-sm font-semibold tracking-wide">{airport.iata}</span>
-        <span class="max-w-full truncate text-xs text-gray-500 dark:text-gray-400">
+        <span class="max-w-full truncate text-xs text-gray-500 group-aria-pressed:text-gray-300 dark:text-gray-500 dark:group-aria-pressed:text-gray-500">
           {airport.city}
         </span>
       </button>

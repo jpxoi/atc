@@ -17,7 +17,9 @@ let listening: HTMLAudioElement | null = null;
 
 function setIndicator(el: HTMLElement, state: IndicatorState): void {
   el.dataset.state = state;
-  el.textContent = STATE_LABEL[state];
+  const label = el.querySelector("[data-atc-indicator-label]");
+  if (label) label.textContent = STATE_LABEL[state];
+  else el.textContent = STATE_LABEL[state];
 }
 
 function feedRoot(audio: HTMLAudioElement): HTMLElement | null {
@@ -59,22 +61,29 @@ function isArmed(audio: HTMLAudioElement): boolean {
   return state === "connecting" || state === "live";
 }
 
+function isLive(audio: HTMLAudioElement): boolean {
+  return indicatorFor(audio)?.dataset.state === "live";
+}
+
 function syncListenUi(): void {
   if (listening && !isArmed(listening)) listening = null;
 
   for (const audio of players()) {
-    const running = isArmed(audio);
-    const audible = running && audio === listening;
+    const live = isLive(audio);
+    const audible = live && audio === listening;
     audio.muted = !audible;
     audio.volume = 1;
 
     const feed = feedRoot(audio);
-    if (feed) feed.dataset.listening = String(audible);
+    if (feed) {
+      feed.dataset.listening = String(audible);
+      feed.dataset.live = String(live);
+    }
 
     const listen = listenFor(audio);
     if (!listen) continue;
-    listen.hidden = !running;
-    listen.disabled = !running;
+    listen.hidden = !live;
+    listen.disabled = !live;
     listen.setAttribute("aria-pressed", String(audible));
     listen.setAttribute(
       "aria-label",
@@ -86,7 +95,7 @@ function syncListenUi(): void {
 }
 
 function listenTo(audio: HTMLAudioElement): void {
-  if (!isArmed(audio)) return;
+  if (!isLive(audio)) return;
   listening = audio;
   syncListenUi();
 }
@@ -178,24 +187,35 @@ export function bindAtcPlayers(): void {
     const listen = listenFor(audio);
     if (!indicator || !toggle || !listen) continue;
 
-    toggle.addEventListener("click", () => {
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
       if (audio.paused) startPlayer(audio, indicator);
       else stopPlayer(audio, indicator, "idle");
     });
 
-    listen.addEventListener("click", () => listenTo(audio));
+    listen.addEventListener("click", (event) => {
+      event.stopPropagation();
+      listenTo(audio);
+    });
+
+    feedRoot(audio)?.addEventListener("click", () => {
+      listenTo(audio);
+    });
 
     audio.addEventListener("play", () => {
+      if (indicator.dataset.state === "live") return;
       setIndicator(indicator, "connecting");
       setToggle(audio, true);
       armConnectTimer(audio, indicator);
       syncListenUi();
     });
     audio.addEventListener("waiting", () => {
+      if (indicator.dataset.state === "live") return;
       setIndicator(indicator, "connecting");
       armConnectTimer(audio, indicator);
     });
     audio.addEventListener("stalled", () => {
+      if (indicator.dataset.state === "live") return;
       setIndicator(indicator, "connecting");
       armConnectTimer(audio, indicator);
     });
