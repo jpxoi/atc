@@ -13,6 +13,8 @@ const connectTimers = new WeakMap<HTMLAudioElement, number>();
 const resetting = new WeakSet<HTMLAudioElement>();
 const stopping = new WeakSet<HTMLAudioElement>();
 
+let listening: HTMLAudioElement | null = null;
+
 function setIndicator(el: HTMLElement, state: IndicatorState): void {
   el.dataset.state = state;
   el.textContent = STATE_LABEL[state];
@@ -31,12 +33,62 @@ function toggleFor(audio: HTMLAudioElement): HTMLButtonElement | null {
   return button instanceof HTMLButtonElement ? button : null;
 }
 
+function listenFor(audio: HTMLAudioElement): HTMLButtonElement | null {
+  const button = feedRoot(audio)?.querySelector("[data-atc-listen]");
+  return button instanceof HTMLButtonElement ? button : null;
+}
+
+function feedTitle(audio: HTMLAudioElement): string {
+  return feedRoot(audio)?.querySelector("h3")?.textContent?.trim() ?? "feed";
+}
+
 function setToggle(audio: HTMLAudioElement, active: boolean): void {
   const button = toggleFor(audio);
   if (!button) return;
   button.setAttribute("aria-pressed", String(active));
-  const title = feedRoot(audio)?.querySelector("h3")?.textContent?.trim() ?? "feed";
-  button.setAttribute("aria-label", `${active ? "Stop" : "Play"} ${title}`);
+  button.setAttribute("aria-label", `${active ? "Stop" : "Play"} ${feedTitle(audio)}`);
+}
+
+function players(): HTMLAudioElement[] {
+  return [...document.querySelectorAll<HTMLAudioElement>("[data-atc-audio]")];
+}
+
+function isArmed(audio: HTMLAudioElement): boolean {
+  if (!audio.paused) return true;
+  const state = indicatorFor(audio)?.dataset.state;
+  return state === "connecting" || state === "live";
+}
+
+function syncListenUi(): void {
+  if (listening && !isArmed(listening)) listening = null;
+
+  for (const audio of players()) {
+    const running = isArmed(audio);
+    const audible = running && audio === listening;
+    audio.muted = !audible;
+    audio.volume = 1;
+
+    const feed = feedRoot(audio);
+    if (feed) feed.dataset.listening = String(audible);
+
+    const listen = listenFor(audio);
+    if (!listen) continue;
+    listen.hidden = !running;
+    listen.disabled = !running;
+    listen.setAttribute("aria-pressed", String(audible));
+    listen.setAttribute(
+      "aria-label",
+      audible
+        ? `Listening to ${feedTitle(audio)}`
+        : `Listen to ${feedTitle(audio)}`,
+    );
+  }
+}
+
+function listenTo(audio: HTMLAudioElement): void {
+  if (!isArmed(audio)) return;
+  listening = audio;
+  syncListenUi();
 }
 
 function streamSrc(audio: HTMLAudioElement): string {
@@ -75,13 +127,19 @@ function stopPlayer(
   indicator: HTMLElement,
   state: "idle" | "offline",
 ): void {
+  const wasListening = listening === audio;
   stopping.add(audio);
   clearConnectTimer(audio);
   if (!audio.paused) audio.pause();
   resetSrc(audio);
   setIndicator(indicator, state);
   setToggle(audio, false);
+
+  if (wasListening) {
+    listening = players().find((player) => player !== audio && isArmed(player)) ?? null;
+  }
   stopping.delete(audio);
+  syncListenUi();
 }
 
 function startPlayer(audio: HTMLAudioElement, indicator: HTMLElement): void {
@@ -89,9 +147,11 @@ function startPlayer(audio: HTMLAudioElement, indicator: HTMLElement): void {
   const source = audio.querySelector("source");
   if (source && url && !source.getAttribute("src")) source.src = url;
 
+  listening = audio;
   setIndicator(indicator, "connecting");
   setToggle(audio, true);
   armConnectTimer(audio, indicator);
+  syncListenUi();
 
   void audio.play().catch(() => {
     stopPlayer(audio, indicator, "offline");
@@ -99,8 +159,9 @@ function startPlayer(audio: HTMLAudioElement, indicator: HTMLElement): void {
 }
 
 export function stopAllAtcPlayers(): void {
-  const players = document.querySelectorAll<HTMLAudioElement>("[data-atc-audio]");
-  for (const audio of players) {
+  listening = null;
+  const list = players();
+  for (const audio of list) {
     const indicator = indicatorFor(audio);
     if (!indicator) continue;
     stopPlayer(audio, indicator, "idle");
@@ -108,22 +169,27 @@ export function stopAllAtcPlayers(): void {
 }
 
 export function bindAtcPlayers(): void {
-  const players = document.querySelectorAll<HTMLAudioElement>("[data-atc-audio]");
+  for (const audio of players()) {
+    audio.muted = true;
+    audio.volume = 1;
 
-  for (const audio of players) {
     const indicator = indicatorFor(audio);
     const toggle = toggleFor(audio);
-    if (!indicator || !toggle) continue;
+    const listen = listenFor(audio);
+    if (!indicator || !toggle || !listen) continue;
 
     toggle.addEventListener("click", () => {
       if (audio.paused) startPlayer(audio, indicator);
       else stopPlayer(audio, indicator, "idle");
     });
 
+    listen.addEventListener("click", () => listenTo(audio));
+
     audio.addEventListener("play", () => {
       setIndicator(indicator, "connecting");
       setToggle(audio, true);
       armConnectTimer(audio, indicator);
+      syncListenUi();
     });
     audio.addEventListener("waiting", () => {
       setIndicator(indicator, "connecting");
@@ -137,16 +203,24 @@ export function bindAtcPlayers(): void {
       clearConnectTimer(audio);
       setIndicator(indicator, "live");
       setToggle(audio, true);
+      if (!listening) listening = audio;
+      syncListenUi();
     });
     audio.addEventListener("pause", () => {
       if (resetting.has(audio) || stopping.has(audio)) return;
       clearConnectTimer(audio);
       setToggle(audio, false);
       setIndicator(indicator, audio.error ? "offline" : "idle");
+      if (listening === audio) {
+        listening = players().find((player) => player !== audio && isArmed(player)) ?? null;
+      }
+      syncListenUi();
     });
     audio.addEventListener("error", () => {
       if (resetting.has(audio)) return;
       stopPlayer(audio, indicator, "offline");
     });
   }
+
+  syncListenUi();
 }
