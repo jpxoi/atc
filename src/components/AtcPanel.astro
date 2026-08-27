@@ -15,7 +15,7 @@ const { airports, selectedIcao } = Astro.props;
 const atcAirports = airports.filter((airport) => airport.feeds.length > 0);
 
 const badgeClass =
-  "group inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium data-[state=idle]:bg-gray-200 data-[state=idle]:text-gray-600 data-[state=connecting]:bg-amber-500 data-[state=connecting]:text-white data-[state=live]:bg-gray-200 data-[state=live]:text-gray-700 data-[state=offline]:bg-gray-800 data-[state=offline]:text-gray-200 dark:data-[state=idle]:bg-gray-700 dark:data-[state=idle]:text-gray-300 dark:data-[state=connecting]:bg-amber-600 dark:data-[state=live]:bg-gray-700 dark:data-[state=live]:text-gray-100 dark:data-[state=offline]:bg-black";
+  "group inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium data-[state=idle]:bg-gray-200 data-[state=idle]:text-gray-600 data-[state=connecting]:bg-amber-500 data-[state=connecting]:text-white data-[state=buffering]:bg-amber-500 data-[state=buffering]:text-white data-[state=reconnecting]:bg-orange-600 data-[state=reconnecting]:text-white data-[state=live]:bg-gray-200 data-[state=live]:text-gray-700 data-[state=offline]:bg-gray-800 data-[state=offline]:text-gray-200 dark:data-[state=idle]:bg-gray-700 dark:data-[state=idle]:text-gray-300 dark:data-[state=connecting]:bg-amber-600 dark:data-[state=buffering]:bg-amber-600 dark:data-[state=reconnecting]:bg-orange-700 dark:data-[state=live]:bg-gray-700 dark:data-[state=live]:text-gray-100 dark:data-[state=offline]:bg-black";
 
 const iconClass = "pointer-events-none";
 ---
@@ -40,6 +40,8 @@ const iconClass = "pointer-events-none";
                 <span
                   data-atc-indicator
                   data-state="idle"
+                  role="status"
+                  aria-live="polite"
                   class={badgeClass}
                 >
                   <span class="hidden size-1.5 rounded-full bg-red-500 group-data-[state=live]:block"></span>
@@ -105,9 +107,7 @@ const iconClass = "pointer-events-none";
                   data-src={streamUrl(feed.mount)}
                   preload="none"
                   muted
-                >
-                  <source src={streamUrl(feed.mount)} type="audio/mpeg" />
-                </audio>
+                />
               </div>
             </article>
           ))}
