@@ -38,7 +38,8 @@ export function loadMetarWidget(airport: Airport): void {
   const link = document.createElement("a");
   link.href = metarSiteUrl(airport.icao);
   link.id = `metartaf-${METAR_TARGET}`;
-  link.className = "block h-67.5 w-75 text-lg font-medium text-black sm:w-125 lg:w-full";
+  link.className =
+    "block h-67.5 w-75 text-lg font-medium text-black sm:w-125 lg:w-full";
   link.textContent = `METAR ${airport.name}`;
   host.appendChild(link);
 

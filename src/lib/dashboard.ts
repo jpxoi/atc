@@ -28,7 +28,9 @@ export function initDashboard(airports: readonly Airport[]): void {
 
   bindAtcPlayers();
 
-  const selected = selectors.find((button) => button.getAttribute("aria-pressed") === "true");
+  const selected = selectors.find(
+    (button) => button.getAttribute("aria-pressed") === "true",
+  );
   let selectedIcao = selected?.dataset.icao;
 
   const selectAirport = (icao: string): void => {

@@ -1,5 +1,6 @@
 export function whenReady(callback: () => void): void {
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", callback, { once: true });
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", callback, { once: true });
   else callback();
 }
 

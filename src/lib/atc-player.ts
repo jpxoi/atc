@@ -1,10 +1,5 @@
 type PlayerPhase =
-  | "idle"
-  | "connecting"
-  | "live"
-  | "buffering"
-  | "reconnecting"
-  | "offline";
+  "idle" | "connecting" | "live" | "buffering" | "reconnecting" | "offline";
 
 type PlayerRuntime = {
   desired: boolean;
@@ -102,12 +97,18 @@ function setToggle(audio: HTMLAudioElement, active: boolean): void {
   if (!button) return;
 
   button.setAttribute("aria-pressed", String(active));
-  button.setAttribute("aria-label", `${active ? "Stop" : "Play"} ${feedTitle(audio)}`);
+  button.setAttribute(
+    "aria-label",
+    `${active ? "Stop" : "Play"} ${feedTitle(audio)}`,
+  );
 }
 
 function isSelectable(audio: HTMLAudioElement): boolean {
   const runtime = runtimeFor(audio);
-  return runtime.desired && (runtime.phase === "live" || runtime.phase === "buffering");
+  return (
+    runtime.desired &&
+    (runtime.phase === "live" || runtime.phase === "buffering")
+  );
 }
 
 function syncListenUi(): void {
@@ -183,10 +184,16 @@ function loadFreshStream(audio: HTMLAudioElement): boolean {
 
 function selectFallback(excluding: HTMLAudioElement): void {
   if (listening !== excluding) return;
-  listening = players().find((audio) => audio !== excluding && runtimeFor(audio).desired) ?? null;
+  listening =
+    players().find(
+      (audio) => audio !== excluding && runtimeFor(audio).desired,
+    ) ?? null;
 }
 
-function deactivatePlayer(audio: HTMLAudioElement, phase: "idle" | "offline"): void {
+function deactivatePlayer(
+  audio: HTMLAudioElement,
+  phase: "idle" | "offline",
+): void {
   const runtime = runtimeFor(audio);
   runtime.desired = false;
   runtime.attempt += 1;
@@ -200,7 +207,10 @@ function deactivatePlayer(audio: HTMLAudioElement, phase: "idle" | "offline"): v
 }
 
 function retryDelay(retryCount: number): number {
-  const index = Math.min(Math.max(retryCount - 1, 0), RETRY_DELAYS_MS.length - 1);
+  const index = Math.min(
+    Math.max(retryCount - 1, 0),
+    RETRY_DELAYS_MS.length - 1,
+  );
   return RETRY_DELAYS_MS[index];
 }
 
@@ -244,12 +254,21 @@ function armStablePlaybackTimer(audio: HTMLAudioElement): void {
   const attempt = runtime.attempt;
   runtime.stableTimer = window.setTimeout(() => {
     delete runtime.stableTimer;
-    if (!runtime.desired || runtime.attempt !== attempt || runtime.phase !== "live") return;
+    if (
+      !runtime.desired ||
+      runtime.attempt !== attempt ||
+      runtime.phase !== "live"
+    )
+      return;
     runtime.retryCount = 0;
   }, STABLE_PLAYBACK_MS);
 }
 
-function handlePlayFailure(audio: HTMLAudioElement, attempt: number, error: unknown): void {
+function handlePlayFailure(
+  audio: HTMLAudioElement,
+  attempt: number,
+  error: unknown,
+): void {
   const runtime = runtimeFor(audio);
   if (!runtime.desired || runtime.attempt !== attempt) return;
 
